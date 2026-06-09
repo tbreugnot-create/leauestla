@@ -4,68 +4,13 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <title>L'eau est là ! — Bassin d'Arcachon</title>
-<meta name="description" content="Marées en temps réel — Bassin d'Arcachon et plages océan. Baignade, bateau, surf."/>
+<meta name="description" content="Marées en temps réel — Bassin d'Arcachon et plages océan. Données SHOM officielles."/>
 <meta name="theme-color" content="#0A3D5C"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="L'eau est là !"/>
-<meta property="og:title" content="L'eau est là ! — Bassin d'Arcachon"/>
-<meta property="og:description" content="Baignade, bateau, surf — le bon moment en un coup d'œil."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://leauestla.fr"/>
-
-<!-- Favicon inline SVG -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230A3D5C'/%3E%3Ccircle cx='32' cy='22' r='10' fill='%23F5C842'/%3E%3Cpath d='M2 42 Q16 34 32 42 Q48 50 62 42 L62 64 L2 64 Z' fill='%235DCAA5'/%3E%3Cpath d='M2 50 Q16 42 32 50 Q48 58 62 50 L62 64 L2 64 Z' fill='%231D9E75'/%3E%3C/svg%3E"/>
-
-<!-- Apple touch icon inline -->
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230A3D5C'/%3E%3Ccircle cx='90' cy='62' r='28' fill='%23F5C842'/%3E%3Cpath d='M0 115 Q45 95 90 115 Q135 135 180 115 L180 180 L0 180 Z' fill='%235DCAA5'/%3E%3Cpath d='M0 138 Q45 118 90 138 Q135 158 180 138 L180 180 L0 180 Z' fill='%231D9E75'/%3E%3Ctext x='90' y='175' text-anchor='middle' font-size='18' fill='white' font-family='Georgia,serif' font-weight='bold'%3EL'eau%3C/text%3E%3C/svg%3E"/>
-
-<!-- PWA Manifest inline -->
-<script>
-const manifestData = {
-  name: "L'eau est là !",
-  short_name: "L'eau est là",
-  description: "Marées en temps réel — Bassin d'Arcachon & Côte Atlantique",
-  start_url: "/",
-  display: "standalone",
-  background_color: "#0A3D5C",
-  theme_color: "#0A3D5C",
-  orientation: "portrait",
-  lang: "fr",
-  icons: [
-    {
-      src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='256' fill='%230A3D5C'/%3E%3Ccircle cx='256' cy='176' r='72' fill='%23F5C842'/%3E%3Cpath d='M0 340 Q128 280 256 340 Q384 400 512 340 L512 512 L0 512 Z' fill='%235DCAA5'/%3E%3Cpath d='M0 400 Q128 340 256 400 Q384 460 512 400 L512 512 L0 512 Z' fill='%231D9E75'/%3E%3C/svg%3E",
-      sizes: "512x512",
-      type: "image/svg+xml",
-      purpose: "any maskable"
-    }
-  ]
-};
-const blob = new Blob([JSON.stringify(manifestData)], {type:'application/json'});
-const manifestURL = URL.createObjectURL(blob);
-document.write('<link rel="manifest" href="' + manifestURL + '"/>');
-</script>
-
-<!-- Service Worker -->
-<script>
-if('serviceWorker' in navigator){
-  const swCode = `
-    const CACHE = 'leauestla-v1';
-    self.addEventListener('install', e => {
-      e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])));
-    });
-    self.addEventListener('fetch', e => {
-      e.respondWith(
-        fetch(e.request).catch(() => caches.match(e.request))
-      );
-    });
-  `;
-  const swBlob = new Blob([swCode], {type:'application/javascript'});
-  const swURL = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swURL).catch(()=>{});
-}
-</script>
-
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230A3D5C'/%3E%3Ccircle cx='90' cy='62' r='28' fill='%23F5C842'/%3E%3Cpath d='M0 115 Q45 95 90 115 Q135 135 180 115 L180 180 L0 180 Z' fill='%235DCAA5'/%3E%3Cpath d='M0 138 Q45 118 90 138 Q135 158 180 138 L180 180 L0 180 Z' fill='%231D9E75'/%3E%3C/svg%3E"/>
 <style>
 :root{
   --bleu:#0A3D5C;--teal:#1D9E75;--eau:#5DCAA5;--mousse:#9FE1CB;
@@ -75,28 +20,22 @@ if('serviceWorker' in navigator){
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f7;color:#05202F}
 .app{max-width:440px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
-
-header{background:var(--bleu);padding:14px 16px 10px;color:#fff;text-align:center}
+header{background:var(--bleu);padding:12px 16px 10px;color:#fff;text-align:center}
 .logo-txt{font-family:Georgia,serif;font-size:24px;font-weight:700;color:#fff}
 .logo-sub{font-size:10px;letter-spacing:3px;color:var(--mousse);margin-top:2px}
-
 .mode-bar{display:flex;background:var(--bleu);padding:0 12px 12px;gap:8px}
 .mode-btn{flex:1;padding:9px;border-radius:12px;border:1.5px solid rgba(255,255,255,.25);font-size:13px;font-weight:600;cursor:pointer;text-align:center;color:rgba(255,255,255,.6);background:transparent;transition:all .15s;font-family:inherit}
 .mode-btn.on{background:#fff;color:var(--bleu);border-color:#fff}
-
 .lieux{background:#fff;padding:10px 12px;border-bottom:1px solid #e8edf0;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .lieux::-webkit-scrollbar{display:none}
-.cb{display:inline-block;padding:6px 13px;border-radius:20px;border:1.5px solid #dde4ea;font-size:13px;color:#4a6070;cursor:pointer;margin-right:6px;background:#fff;font-weight:500;transition:all .15s}
+.cb{display:inline-block;padding:6px 13px;border-radius:20px;border:1.5px solid #dde4ea;font-size:13px;color:#4a6070;cursor:pointer;margin-right:6px;background:#fff;font-weight:500}
 .cb.on-bassin{background:var(--bleu);color:#fff;border-color:var(--bleu)}
 .cb.on-ocean{background:var(--surf);color:#fff;border-color:var(--surf)}
-
 .profiles{display:flex;gap:8px;padding:10px 12px;background:#fff;border-bottom:1px solid #e8edf0}
-.pb{flex:1;padding:9px 4px;text-align:center;border-radius:10px;border:1.5px solid #dde4ea;font-size:12px;color:#4a6070;cursor:pointer;background:#fff;font-weight:500;transition:all .15s;line-height:1.3;font-family:inherit}
+.pb{flex:1;padding:9px 4px;text-align:center;border-radius:10px;border:1.5px solid #dde4ea;font-size:12px;color:#4a6070;cursor:pointer;background:#fff;font-weight:500;font-family:inherit}
 .pb.on-bassin{border-color:var(--teal);color:var(--bleu);background:#E1F5EE}
 .pb.on-ocean{border-color:var(--surf);color:var(--surf);background:var(--surf-light)}
-
 main{flex:1;padding:12px}
-
 .verdict{background:#fff;border-radius:18px;padding:20px 16px;text-align:center;margin-bottom:10px;box-shadow:0 2px 12px rgba(10,61,92,.08)}
 .v-em{font-size:52px;line-height:1;margin-bottom:6px;display:block}
 .v-txt{font-size:22px;font-weight:700;color:var(--bleu);margin-bottom:4px}
@@ -104,56 +43,41 @@ main{flex:1;padding:12px}
 .cd-g{background:#E1F5EE;color:var(--teal)}
 .cd-o{background:#FAEEDA;color:#9a6500}
 .cd-r{background:#FCEBEB;color:#c0392b}
-
 .conseil{border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.6;margin-bottom:10px;border-left:4px solid}
 .conseil.g{background:#E1F5EE;border-color:var(--teal);color:#0a4a2a}
 .conseil.o{background:#FAEEDA;border-color:#EF9F27;color:#6b4400}
 .conseil.r{background:#FCEBEB;border-color:#E24B4A;color:#6b1010}
-
-.mode-badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:8px}
-.badge-bassin{background:#E1F5EE;color:var(--bleu)}
-.badge-ocean{background:var(--surf-light);color:var(--surf)}
-
+/* ALERTE SÉCURITÉ */
+.alerte{background:#FFF3CD;border:1.5px solid #FFC107;border-radius:12px;padding:11px 14px;font-size:13px;color:#6b4400;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.fenetre-card{background:#fff;border-radius:14px;padding:14px 15px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)}
+.fen-title{font-size:12px;font-weight:600;color:var(--bleu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.fen-slots{display:flex;gap:8px;flex-wrap:wrap}
+.fen-slot{flex:1;min-width:80px;background:#f4f7fa;border-radius:10px;padding:10px;text-align:center;border:1.5px solid transparent}
+.fen-slot.active{background:#E1F5EE;border-color:var(--teal)}
+.fen-slot.passed{opacity:.5}
+.fen-slot-lbl{font-size:10px;color:#7a8e9a;margin-bottom:3px}
+.fen-slot-time{font-size:14px;font-weight:700;color:var(--bleu);font-family:monospace}
+.fen-slot-info{font-size:11px;color:#8a9eaa;margin-top:2px}
+.barre-card{background:#fff;border-radius:14px;padding:14px 15px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)}
 .activites{background:#fff;border-radius:14px;padding:13px 15px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)}
 .act-title{font-size:12px;font-weight:600;color:var(--bleu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-.act-item{font-size:13px;color:#2d4a5c;padding:5px 0;border-bottom:1px solid #f0f4f7;display:flex;align-items:center;gap:8px}
+.act-item{font-size:13px;color:#2d4a5c;padding:5px 0;border-bottom:1px solid #f0f4f7}
 .act-item:last-child{border-bottom:none;padding-bottom:0}
-
 .courbe-card{background:#fff;border-radius:14px;padding:14px 14px 10px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)}
-.courbe-lbl{font-size:11px;color:#6a8090;margin-bottom:10px}
 .time-axis{display:flex;justify-content:space-between;font-size:10px;color:#8a9eaa;margin-top:4px}
 .tide-boxes{display:flex;gap:8px;margin-top:12px}
 .tb{flex:1;background:#f4f7fa;border-radius:10px;padding:10px;text-align:center}
 .tb-l{font-size:10px;color:#7a8e9a;margin-bottom:3px}
 .tb-v{font-size:16px;font-weight:700;color:var(--bleu);font-family:monospace}
 .tb-s{font-size:11px;color:#8a9eaa;margin-top:2px}
-
-.next-row{display:flex;gap:8px;margin-bottom:10px}
-.nb{flex:1;background:#fff;border-radius:12px;padding:11px;text-align:center;box-shadow:0 1px 6px rgba(10,61,92,.06)}
-.nb-l{font-size:10px;color:#7a8e9a}
-.nb-v{font-size:15px;font-weight:700;color:var(--bleu);font-family:monospace;margin-top:3px}
-
 .bonplan{background:linear-gradient(135deg,#fff8e6,#fffdf5);border:1.5px solid var(--soleil);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
 .bonplan-icon{font-size:28px;flex-shrink:0}
 .bonplan-txt{font-size:12px;color:#6b4400;line-height:1.5}
 .bonplan-txt strong{color:var(--bleu);display:block;font-size:13px;margin-bottom:2px}
 .bonplan-cta{font-size:11px;color:var(--teal);font-weight:600;margin-top:4px;text-decoration:none;display:inline-block}
-
-.surf-cond{background:#fff;border-radius:14px;padding:13px 15px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)}
-.surf-title{font-size:12px;font-weight:600;color:var(--surf);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
-.surf-row{display:flex;gap:8px}
-.surf-box{flex:1;background:var(--surf-light);border-radius:10px;padding:10px;text-align:center}
-.surf-box-l{font-size:10px;color:var(--surf);margin-bottom:3px}
-.surf-box-v{font-size:14px;font-weight:700;color:var(--bleu)}
-
-/* BANNIÈRE INSTALL */
-.install-banner{background:var(--bleu);color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;font-size:13px;gap:10px}
-.install-banner button{padding:6px 14px;border-radius:8px;border:none;background:var(--soleil);color:var(--bleu);font-weight:700;cursor:pointer;font-size:12px;font-family:inherit;flex-shrink:0}
-.install-banner .close-btn{background:transparent;color:rgba(255,255,255,.5);font-size:18px;padding:0 4px;line-height:1}
-
 .rfbtn{width:100%;padding:12px;border-radius:12px;border:1.5px solid #dde4ea;background:#fff;color:#4a6070;cursor:pointer;font-size:13px;font-weight:500;margin-bottom:10px;font-family:inherit}
-.rfbtn:active{transform:scale(.98)}
-
+.shom-badge{text-align:center;font-size:10px;color:#8a9eaa;margin-bottom:8px}
+.shom-badge span{background:#f4f7fa;border-radius:20px;padding:3px 10px}
 footer{background:var(--bleu);color:var(--mousse);text-align:center;padding:14px;font-size:11px;line-height:1.8}
 footer a{color:var(--soleil);text-decoration:none}
 </style>
@@ -161,16 +85,10 @@ footer a{color:var(--soleil);text-decoration:none}
 <body>
 <div class="app">
 
-<!-- Bannière installation PWA -->
-<div class="install-banner" id="install-banner" style="display:none">
-  <span>📱 Installe l'app sur ton téléphone !</span>
-  <button id="install-btn">Installer</button>
-  <button class="close-btn" onclick="document.getElementById('install-banner').style.display='none'">×</button>
-</div>
-
 <header>
   <div class="logo-txt">🌊 L'eau est là !</div>
   <div class="logo-sub">BASSIN D'ARCACHON · CÔTE ATLANTIQUE</div>
+  <div id="horloge" style="font-size:13px;color:var(--mousse);margin-top:5px;font-family:monospace;letter-spacing:1px"></div>
 </header>
 
 <div class="mode-bar">
@@ -188,301 +106,557 @@ footer a{color:var(--soleil);text-decoration:none}
 
 <footer>
   <div>🌊 <strong style="color:#fff">leauestla.fr</strong> — Bassin d'Arcachon · Côte Atlantique</div>
-  <div>Gratuit · Sans inscription · Mis à jour en temps réel</div>
+  <div>Données marées : <strong style="color:var(--soleil)">SHOM 2026</strong> · Gratuit · Sans inscription</div>
   <div style="margin-top:4px"><a href="mailto:contact@leauestla.fr">contact@leauestla.fr</a></div>
 </footer>
 </div>
 
 <script>
-// ── DONNÉES ──────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// DONNÉES SHOM OFFICIEL 2026 — Arcachon
+// Source : Guide des marées Andernos-Tourisme / SHOM
+// Format : [jour, hBasseMatin, hautBasseMatin, hHauteMatin, hautHauteMatin, coeffMatin, hBasseSoir, hautBasseSoir, hHauteSoir, hautHauteSoir, coeffSoir]
+// heure = "HH:MM", hauteur = float mètres
+// ═══════════════════════════════════════════════════════════
+const SHOM = {
+  // JUIN 2026
+  "2026-06-01":["00:35",0.80,"06:51",3.83,71,"12:48",0.86,"19:06",3.99,71],
+  "2026-06-02":["01:10",0.79,"07:26",3.78,70,"13:22",0.89,"19:41",3.94,69],
+  "2026-06-03":["01:45",0.80,"08:00",3.70,68,"13:57",0.94,"20:15",3.87,66],
+  "2026-06-04":["02:21",0.85,"08:33",3.61,64,"14:31",1.02,"20:52",3.78,62],
+  "2026-06-05":["02:57",0.93,"09:11",3.52,59,"15:08",1.12,"21:33",3.68,57],
+  "2026-06-06":["03:36",1.02,"09:56",3.42,54,"15:48",1.21,"22:20",3.59,52],
+  "2026-06-07":["04:19",1.11,"10:47",3.35,50,"16:37",1.29,"23:14",3.52,48],
+  "2026-06-08":["05:11",1.17,"11:44",3.31,47,"17:36",1.33,null,null,null],
+  "2026-06-09":["06:14",1.19,"12:49",3.35,47,"18:45",1.28,"00:14",3.51,47],
+  "2026-06-10":["07:21",1.13,"13:55",3.47,52,"19:53",1.16,"01:17",3.55,49],
+  "2026-06-11":["08:27",1.01,"14:58",3.65,60,"20:58",0.98,"02:23",3.66,55],
+  "2026-06-12":["09:30",0.87,"15:57",3.85,69,"22:01",0.79,"03:26",3.81,64],
+  "2026-06-13":["10:31",0.73,"16:52",4.06,79,"23:02",0.61,"04:25",3.98,74],
+  "2026-06-14":["11:28",0.61,"17:44",4.23,87,"23:59",0.44,"05:21",4.12,83],
+  "2026-06-15":["12:21",0.53,"18:36",4.36,93,null,null,"06:14",4.22,90],
+  "2026-06-16":["13:12",0.50,"19:27",4.42,95,"00:52",0.33,"07:06",4.26,94],
+  "2026-06-17":["13:59",0.52,"20:18",4.39,93,"01:43",0.29,"07:57",4.22,94],
+  "2026-06-18":["14:46",0.59,"21:09",4.29,87,"02:31",0.33,"08:47",4.10,90],
+  "2026-06-19":["15:31",0.69,"22:01",4.11,79,"03:17",0.44,"09:38",3.93,83],
+  "2026-06-20":["16:17",0.83,"22:54",3.91,69,"04:03",0.60,"10:30",3.73,74],
+  "2026-06-21":["17:07",0.99,"23:48",3.70,59,"04:50",0.80,"11:23",3.55,64],
+  "2026-06-22":["18:01",1.13,null,null,null,"05:41",0.99,"12:19",3.41,55],
+  "2026-06-23":["19:02",1.24,"00:44",3.53,51,"06:37",1.15,"13:16",3.34,48],
+  "2026-06-24":["20:07",1.27,"01:42",3.42,47,"07:38",1.24,"14:16",3.35,46],
+  "2026-06-25":["21:11",1.22,"02:43",3.38,46,"08:42",1.25,"15:15",3.43,47],
+  "2026-06-26":["22:08",1.13,"03:42",3.41,49,"09:40",1.19,"16:08",3.54,51],
+  "2026-06-27":["22:56",1.03,"04:34",3.48,54,"10:31",1.10,"16:54",3.67,56],
+  "2026-06-28":["23:39",0.95,"05:19",3.57,59,"11:15",1.03,"17:35",3.79,61],
+  "2026-06-29":[null,null,"05:59",3.66,63,"11:54",0.97,"18:14",3.89,65],
+  "2026-06-30":["00:18",0.87,"06:37",3.72,67,"12:32",0.91,"18:51",3.95,69],
+  // JUILLET 2026
+  "2026-07-01":["00:56",0.80,"07:13",3.75,70,"13:09",0.62,"19:18",4.04,83],
+  "2026-07-02":["01:34",0.74,"07:47",3.76,71,"13:51",0.62,"20:00",4.00,81],
+  "2026-07-03":["02:11",0.73,"08:21",3.76,72,"14:33",0.69,"20:45",3.91,78],
+  "2026-07-04":["02:47",0.75,"08:55",3.73,70,"15:17",0.79,"21:34",3.79,72],
+  "2026-07-05":["03:22",0.80,"09:34",3.68,68,"16:05",0.93,"22:28",3.65,64],
+  "2026-07-06":["03:59",0.87,"10:17",3.60,64,"17:01",1.07,"23:33",3.56,58],
+  "2026-07-07":["04:40",0.95,"11:04",3.52,59,"18:08",1.17,null,null,null],
+  "2026-07-08":["05:30",1.05,"12:01",3.45,54,"19:19",1.18,"00:46",3.56,54],
+  "2026-07-09":["06:33",1.13,"13:06",3.45,52,"20:29",1.11,"01:56",3.65,55],
+  "2026-07-10":["07:46",1.13,"14:19",3.54,53,"21:33",0.99,"02:59",3.82,61],
+  "2026-07-11":["08:59",1.04,"15:31",3.71,60,"22:30",0.86,"03:57",4.01,69],
+  "2026-07-12":["10:07",0.91,"16:35",3.94,70,"23:20",0.77,"04:48",4.18,77],
+  "2026-07-13":["11:12",0.75,"17:33",4.18,81,null,null,"05:36",4.30,83],
+  "2026-07-14":["12:11",0.60,"18:27",4.37,90,"00:05",0.71,"06:20",4.35,86],
+  "2026-07-15":["13:04",0.48,"19:18",4.48,96,"00:44",0.70,"07:00",4.32,86],
+  "2026-07-16":["13:52",0.43,"20:06",4.49,98,"01:20",0.74,"07:36",4.22,83],
+  "2026-07-17":["14:35",0.45,"20:52",4.40,94,"01:53",0.81,"08:09",4.08,76],
+  "2026-07-18":["15:14",0.54,"21:35",4.22,86,"02:25",0.92,"08:41",3.91,68],
+  "2026-07-19":["15:52",0.69,"22:16",3.97,75,"02:57",1.08,"09:15",3.72,59],
+  "2026-07-20":["16:32",0.89,"22:58",3.71,63,"03:31",1.26,"09:56",3.51,48],
+  "2026-07-21":["17:15",1.12,"23:47",3.45,50,"04:11",1.45,"10:48",3.30,39],
+  "2026-07-22":["18:08",1.35,null,null,null,"05:07",1.62,"11:57",3.16,32],
+  "2026-07-23":["19:17",1.49,"00:46",3.25,40,"06:36",1.68,"13:12",3.13,31],
+  "2026-07-24":["20:35",1.47,"01:53",3.13,35,"07:53",1.55,"14:29",3.25,37],
+  "2026-07-25":["21:43",1.33,"03:09",3.15,37,"08:55",1.34,"15:31",3.45,48],
+  "2026-07-26":["22:36",1.15,"04:16",3.27,44,"09:51",1.09,"16:20",3.69,61],
+  "2026-07-27":["23:22",0.99,"05:04",3.44,53,"10:42",0.85,"17:04",3.91,73],
+  "2026-07-28":[null,null,"05:44",3.60,61,"11:31",0.63,"17:46",4.09,84],
+  "2026-07-29":["00:03",0.84,"06:21",3.74,69,"12:16",0.46,"18:26",4.22,93],
+  "2026-07-30":["00:42",0.72,"06:55",3.85,75,"12:59",0.36,"19:05",4.28,98],
+  "2026-07-31":["01:19",0.63,"07:29",3.93,80,"13:59",0.36,"19:05",4.28,98],
+  // AOÛT 2026
+  "2026-08-01":["01:56",0.58,"08:01",3.97,83,"14:08",0.66,"20:16",4.19,83],
+  "2026-08-02":["02:30",0.59,"08:33",3.98,83,"14:40",0.69,"20:51",4.16,82],
+  "2026-08-03":["03:02",0.64,"09:08",3.93,80,"15:12",0.74,"21:28",4.06,77],
+  "2026-08-04":["03:34",0.73,"09:46",3.83,74,"15:47",0.83,"22:09",3.91,70],
+  "2026-08-05":["04:10",0.84,"10:28",3.69,66,"16:29",0.96,"22:56",3.72,61],
+  "2026-08-06":["04:55",1.01,"11:20",3.53,57,"17:22",1.13,"23:56",3.52,52],
+  "2026-08-07":["05:53",1.21,"12:29",3.42,48,"18:37",1.27,null,null,null],
+  "2026-08-08":["07:15",1.32,"13:54",3.44,46,"20:06",1.22,"01:13",3.40,46],
+  "2026-08-09":["08:40",1.25,"15:20",3.63,53,"21:27",1.02,"02:42",3.44,48],
+  "2026-08-10":["09:57",1.05,"16:29",3.92,66,"22:40",0.75,"04:01",3.63,59],
+  "2026-08-11":["11:06",0.80,"17:27",4.21,81,"23:43",0.48,"05:04",3.89,74],
+  "2026-08-12":["12:03",0.56,"18:17",4.44,93,null,null,"05:57",4.11,87],
+  "2026-08-13":["12:53",0.40,"19:03",4.56,100,"00:36",0.28,"06:44",4.26,97],
+  "2026-08-14":["13:37",0.34,"19:46",4.56,102,"01:23",0.20,"07:28",4.31,102],
+  "2026-08-15":["14:15",0.38,"20:25",4.45,98,"02:03",0.25,"08:07",4.27,101],
+  "2026-08-16":["14:49",0.51,"21:00",4.26,90,"02:39",0.39,"08:43",4.14,95],
+  "2026-08-17":["15:21",0.68,"21:32",4.00,78,"03:11",0.59,"09:16",3.97,84],
+  "2026-08-18":["15:53",0.91,"22:06",3.71,64,"03:41",0.82,"09:47",3.77,71],
+  "2026-08-19":["16:28",1.18,"22:46",3.41,49,"04:12",1.07,"10:24",3.54,57],
+  "2026-08-20":["17:09",1.46,"23:47",3.12,36,"04:47",1.34,"11:13",3.30,42],
+  "2026-08-21":["18:16",1.70,null,null,null,"05:33",1.61,"12:25",3.12,30],
+  "2026-08-22":["20:09",1.69,"01:07",2.95,27,"07:03",1.78,"13:49",3.08,26],
+  "2026-08-23":["21:22",1.47,"02:40",2.97,28,"08:43",1.67,"15:15",3.23,32],
+  "2026-08-24":["22:14",1.22,"03:56",3.17,38,"09:45",1.44,"16:13",3.48,44],
+  "2026-08-25":["22:59",0.98,"04:43",3.41,51,"10:33",1.19,"16:56",3.74,57],
+  "2026-08-26":["23:40",0.79,"05:21",3.65,63,"11:16",0.98,"17:34",3.97,68],
+  "2026-08-27":[null,null,"05:56",3.85,74,"11:56",0.80,"18:10",4.16,78],
+  "2026-08-28":["00:20",0.64,"06:30",4.02,83,"12:35",0.66,"18:44",4.30,86],
+  "2026-08-29":["00:58",0.54,"07:03",4.13,89,"13:12",0.57,"19:18",4.38,91],
+  "2026-08-30":["01:34",0.49,"07:35",4.20,93,"13:47",0.54,"19:50",4.40,93],
+  "2026-08-31":["02:07",0.51,"08:06",4.20,93,"14:19",0.57,"20:24",4.35,91],
+  // SEPTEMBRE 2026
+  "2026-09-01":["02:38",0.58,"08:41",4.15,89,"14:51",0.64,"21:01",4.22,85],
+  "2026-09-02":["03:10",0.69,"09:18",4.02,81,"15:26",0.76,"21:42",4.00,75],
+  "2026-09-03":["03:46",0.85,"10:01",3.82,69,"16:07",0.94,"22:30",3.71,62],
+  "2026-09-04":["04:30",1.09,"10:53",3.60,55,"17:01",1.19,"23:34",3.43,48],
+  "2026-09-05":["05:29",1.35,"12:07",3.41,43,"18:21",1.38,null,null,null],
+  "2026-09-06":["07:00",1.50,"13:50",3.43,41,"20:03",1.31,"01:05",3.28,40],
+  "2026-09-07":["08:36",1.36,"15:19",3.68,52,"21:27",1.03,"02:45",3.38,45],
+  "2026-09-08":["09:53",1.07,"16:24",4.01,68,"22:34",0.70,"03:59",3.66,60],
+  "2026-09-09":["10:55",0.76,"17:15",4.29,83,"23:29",0.44,"04:55",3.95,76],
+  "2026-09-10":["11:48",0.51,"18:00",4.48,95,null,null,"05:42",4.17,90],
+  "2026-09-11":["12:33",0.38,"18:41",4.56,101,"00:17",0.29,"06:23",4.30,98],
+  "2026-09-12":["13:13",0.37,"19:18",4.54,101,"00:59",0.28,"07:02",4.35,102],
+  "2026-09-13":["13:48",0.45,"19:52",4.43,97,"01:36",0.37,"07:36",4.32,100],
+  "2026-09-14":["14:18",0.58,"20:23",4.24,89,"02:07",0.53,"08:08",4.22,93],
+  "2026-09-15":["14:46",0.75,"20:53",4.00,77,"02:35",0.71,"08:38",4.08,83],
+  "2026-09-16":["15:14",0.97,"21:23",3.72,63,"03:01",0.91,"09:08",3.89,70],
+  "2026-09-17":["15:44",1.22,"22:00",3.40,49,"03:28",1.14,"09:41",3.65,56],
+  "2026-09-18":["16:19",1.50,"22:49",3.10,35,"03:57",1.40,"10:24",3.38,41],
+  "2026-09-19":["17:10",1.76,null,null,null,"04:34",1.67,"11:28",3.14,28],
+  "2026-09-20":["19:36",1.82,"00:16",2.89,24,"05:39",1.90,"13:01",3.05,22],
+  "2026-09-21":["20:48",1.57,"01:59",2.92,24,"08:09",1.82,"14:31",3.20,29],
+  "2026-09-22":["21:39",1.28,"03:18",3.15,35,"09:09",1.55,"15:35",3.47,42],
+  "2026-09-23":["22:24",1.01,"04:06",3.44,50,"09:58",1.26,"16:21",3.77,57],
+  "2026-09-24":["23:08",0.79,"04:46",3.73,64,"10:43",1.00,"17:01",4.04,71],
+  "2026-09-25":["23:50",0.62,"05:23",3.97,77,"11:26",0.79,"17:39",4.26,82],
+  "2026-09-26":[null,null,"05:59",4.16,87,"12:07",0.63,"18:15",4.42,92],
+  "2026-09-27":["00:30",0.52,"06:33",4.29,95,"12:46",0.53,"18:50",4.50,97],
+  "2026-09-28":["01:07",0.48,"07:07",4.37,99,"13:23",0.49,"19:24",4.52,99],
+  "2026-09-29":["01:42",0.50,"07:41",4.38,98,"13:58",0.51,"20:01",4.44,96],
+  "2026-09-30":["02:16",0.58,"08:17",4.31,92,"14:33",0.59,"20:40",4.27,88],
+};
+
+// ── COMMUNES & PROFILS ────────────────────────────────────
+// Décalage en minutes par rapport à Arcachon (port)
+const OFFSETS_BASSIN={Andernos:8,Arès:12,Audenge:-2,Lanton:0,Biganos:-5,Mios:-8,"Le Teich":-4};
 const LIEUX={
-  bassin:[
-    {n:"Andernos",off:0},{n:"Arès",off:4},{n:"Audenge",off:-6},
-    {n:"Lanton",off:-4},{n:"Biganos",off:-10},{n:"Mios",off:-12},{n:"Le Teich",off:-8}
-  ],
-  ocean:[
-    {n:"Grand Crohot",off:0},{n:"Plage du Phare",off:2},{n:"Le Truc Vert",off:1},
-    {n:"La Jenny",off:0},{n:"Le Porge",off:-5},{n:"Lacanau",off:-8}
-  ]
+  bassin:["Andernos","Arès","Audenge","Lanton","Biganos","Mios","Le Teich"],
+  ocean:["Grand Crohot","Plage du Phare","Le Truc Vert","La Jenny","Le Porge","Lacanau"]
 };
 const PROFILS={
-  bassin:[{id:"baignade",label:"🏖️ Baignade",fen:120},{id:"bateau",label:"⛵ Bateau",fen:180}],
-  ocean:[{id:"surf",label:"🏄 Surf",fen:null},{id:"baignade_ocean",label:"🏖️ Baignade",fen:null}]
+  bassin:[{id:"baignade",label:"🏖️ Baignade"},{id:"bateau",label:"⛵ Bateau"}],
+  ocean:[{id:"surf",label:"🏄 Surf"},{id:"baignade_ocean",label:"🏖️ Baignade"}]
 };
+
+// Seuils hauteur eau utile (en mètres absolus)
+// Bassin : eau aux genoux ~ 2.0m (basse ~1.0-1.4m, haute ~3.3-4.5m)
+const SEUILS={baignade:2.0, bateau:2.5};
+
 const ACTIVITES={
-  baignade:{
-    g:["🏊 Baignade et nage","🛶 Paddle ou kayak","🧺 Pique-nique les pieds dans l'eau","🏰 Château de sable en zone humide"],
-    o:["🏰 Dernier château avant la montée","🧺 Installe ton pique-nique","📸 Repère ton coin de plage"],
-    r:["🏰 Château de sable — LA marée basse !","🦀 Observation crabes et petites bêtes","🚶 Balade sur l'estran","🦪 Cueillette de coques","🌅 Tour du bassin côté promenade"]
-  },
-  bateau:{
-    g:["⚓ Appareillage et navigation","🏝️ Banc d'Arguin accessible","🌊 Mouillage face au Cap Ferret","🎣 Pêche en bassin"],
-    o:["🔧 Prépare amarres et moteur","⛽ Vérifie les niveaux","🗺️ Briefing météo"],
-    r:["🔧 Entretien du bateau à sec","🗺️ Planifie ta prochaine sortie","☕ Café au ponton","🦪 Observer les parcs à huîtres"]
-  },
-  surf:{
-    g:["🏄 Surf — vagues longues et régulières","🤿 Bodyboard conditions parfaites","📸 Session photo depuis la dune"],
-    o:["🌊 Observe les pics avant d'entrer","🏃 Échauffement sur la plage","🏄 Conditions qui s'améliorent"],
-    r:["🚶 Balade sur le sable à perte de vue","🏃 Running sur la plage découverte","🌲 Balade en forêt landaise","📸 Photos depuis les dunes","☕ Café à la cabane de plage"]
-  },
-  baignade_ocean:{
-    g:["🏊 Baignade surveillée","🧺 Pique-nique plage","🏐 Beach-volley","🤿 Snorkeling"],
-    o:["🏰 Château de sable — plage qui se découvre","🏃 Installe-toi, eau qui arrive","🌊 Observe avant d'entrer"],
-    r:["⚠️ Baïnes — rester sur la plage","🏰 Château de sable géant","🚶 Running sur la grève","🌅 Coucher de soleil depuis la dune"]
-  }
+  baignade:{g:["🏊 Baignade et nage","🛶 Paddle ou kayak","🧺 Pique-nique les pieds dans l'eau","🏰 Château de sable en zone humide"],o:["🏰 Dernier château avant la montée","🧺 Installe ton pique-nique","📸 Repère ton coin de plage"],r:["🏰 Château de sable — marée basse idéale !","🦀 Crabes et petites bêtes","🚶 Balade sur l'estran","🦪 Cueillette de coques","🌅 Tour du bassin côté promenade"]},
+  bateau:{g:["⚓ Appareillage et navigation","🏝️ Banc d'Arguin accessible","🌊 Mouillage face au Cap Ferret","🎣 Pêche en bassin"],o:["🔧 Prépare amarres et moteur","⛽ Vérifie les niveaux","🗺️ Briefing météo"],r:["🔧 Entretien du bateau à sec","🗺️ Planifie ta prochaine sortie","☕ Café au ponton","🦪 Observer les parcs à huîtres"]},
+  surf:{g:["🏄 Vagues longues et régulières","🤿 Bodyboard conditions parfaites","📸 Session photo depuis la dune"],o:["🌊 Conditions qui s'améliorent","🏃 Échauffement sur la plage","🌊 Observe les pics"],r:["🚶 Balade sur le sable","🏃 Running sur la plage","🌲 Forêt landaise","☕ Café à la cabane"]},
+  baignade_ocean:{g:["🏊 Baignade surveillée","🧺 Pique-nique plage","🏐 Beach-volley","🤿 Snorkeling"],o:["🏰 Château de sable","🏃 Installe-toi","🌊 Observe avant d'entrer"],r:["⚠️ Rester sur la plage (baïnes)","🏰 Château de sable","🚶 Running sur la grève","🌅 Coucher de soleil depuis la dune"]}
 };
-const BONPLANS={
-  bassin:[
-    {icon:"🛶",titre:"Location paddle à Andernos",txt:"Prêt-à-pagayer, réservation en ligne",cta:"Découvrir →",url:"#"},
-    {icon:"🦪",titre:"Dégustation huîtres du bassin",txt:"Producteurs locaux, vente directe",cta:"Trouver une cabane →",url:"#"},
-    {icon:"⛵",titre:"École de voile — Arès",txt:"Cours tous niveaux, enfants & adultes",cta:"S'inscrire →",url:"#"},
-  ],
-  ocean:[
-    {icon:"🏄",titre:"École de surf — Lacanau",txt:"Cours débutants & perfectionnement",cta:"Réserver →",url:"#"},
-    {icon:"🚲",titre:"Location vélo — piste côtière",txt:"Relier Lacanau au Porge à vélo",cta:"Louer →",url:"#"},
-    {icon:"🌊",titre:"Prévisions surf détaillées",txt:"Meilleurs spots du Médoc",cta:"Voir →",url:"#"},
-  ]
-};
+
+const BONPLANS_BASSIN=[
+  {icon:"🛶",titre:"Location paddle à Andernos",txt:"Prêt-à-pagayer, réservation en ligne",cta:"Découvrir →",url:"#"},
+  {icon:"🦪",titre:"Dégustation huîtres du bassin",txt:"Producteurs locaux, vente directe",cta:"Trouver une cabane →",url:"#"},
+  {icon:"⛵",titre:"École de voile — Arès",txt:"Cours tous niveaux, enfants & adultes",cta:"S'inscrire →",url:"#"},
+];
+const BONPLANS_OCEAN=[
+  {icon:"🏄",titre:"École de surf — Lacanau",txt:"Cours débutants & perfectionnement",cta:"Réserver →",url:"#"},
+  {icon:"🚲",titre:"Location vélo — piste côtière",txt:"Relier Lacanau au Porge à vélo",cta:"Louer →",url:"#"},
+];
 
 let mode='bassin', lieu=LIEUX.bassin[0], profil=PROFILS.bassin[0], bpIdx=0;
 
-// ── MARÉE ─────────────────────────────────────────────────
-function tideH(date,off){
-  const t=date.getTime()/1000+off*60;
-  const M2=2*Math.PI/(12.4206*3600), S2=2*Math.PI/(12*3600);
-  const K1=2*Math.PI/(23.9345*3600), O1=2*Math.PI/(25.8193*3600);
-  return Math.max(0.1,2.5+1.85*Math.cos(M2*t+0.8)+0.65*Math.cos(S2*t+1.2)+0.12*Math.cos(K1*t+2.1)+0.09*Math.cos(O1*t+3.4));
-}
-function buildSeries(off){
-  const start=new Date(); start.setHours(0,0,0,0);
-  return Array.from({length:577},(_,i)=>{const d=new Date(start.getTime()+i*5*60000);return{time:d,h:tideH(d,off)};});
-}
-function findPeaks(pts){
-  const peaks=[];
-  for(let i=4;i<pts.length-4;i++){
-    const h=pts[i].h;
-    const hi=h>pts[i-1].h&&h>pts[i-2].h&&h>pts[i-3].h&&h>pts[i+1].h&&h>pts[i+2].h&&h>pts[i+3].h;
-    const lo=h<pts[i-1].h&&h<pts[i-2].h&&h<pts[i-3].h&&h<pts[i+1].h&&h<pts[i+2].h&&h<pts[i+3].h;
-    if(hi&&(!peaks.length||peaks[peaks.length-1].haute!==true||(pts[i].time-peaks[peaks.length-1].time)>3.6e6))
-      peaks.push({...pts[i],haute:true});
-    if(lo&&(!peaks.length||peaks[peaks.length-1].haute!==false||(pts[i].time-peaks[peaks.length-1].time)>3.6e6))
-      peaks.push({...pts[i],haute:false});
-  }
-  return peaks.sort((a,b)=>a.time-b.time);
-}
-function coeff(h){return Math.max(20,Math.min(120,Math.round((h-1.8)/(3.6-1.8)*120)))}
+// ── UTILITAIRES ───────────────────────────────────────────
 function pad(n){return String(n).padStart(2,'0')}
 function fmtH(d){return pad(d.getHours())+':'+pad(d.getMinutes())}
-function fmtCD(min){min=Math.abs(min);const h=Math.floor(min/60),m=Math.round(min%60);return h>0?`${h}h${pad(m)}`:`${m} min`;}
-
-// ── FENÊTRE GENOUX ────────────────────────────────────────
-// Seuil "eau aux genoux" = basse + 55% de l'amplitude
-// Seuil "bateau" = basse + 35% de l'amplitude
-function getThreshold(peaks, pid){
-  const hautes=peaks.filter(p=>p.haute);
-  const basses=peaks.filter(p=>!p.haute);
-  if(!hautes.length||!basses.length) return null;
-  const hMax=Math.max(...hautes.map(p=>p.h));
-  const hMin=Math.min(...basses.map(p=>p.h));
-  const amp=hMax-hMin;
-  return hMin + amp*(pid==='bateau'?0.35:0.55); // genoux~55%, bateau~35%
+function fmtCD(min){
+  min=Math.abs(min);
+  const h=Math.floor(min/60),m=Math.round(min%60);
+  return h>0?`${h}h${pad(m)}`:`${m} min`;
+}
+function dateKey(d){
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+function parseHeure(str, baseDate, offMin=0){
+  if(!str) return null;
+  const [h,m]=str.split(':').map(Number);
+  const d=new Date(baseDate);
+  d.setHours(h,m+offMin,0,0);
+  return d;
 }
 
-// Trouve les horaires où l'eau dépasse le seuil aujourd'hui
-function getFenetre(pts, threshold){
-  const today=pts.filter(p=>p.time.toDateString()===new Date().toDateString());
-  const debut=today.find(p=>p.h>=threshold);
-  const fin=[...today].reverse().find(p=>p.h>=threshold);
-  return{debut:debut?debut.time:null, fin:fin?fin.time:null};
-}
+// ── INTERPOLATION MARÉE ───────────────────────────────────
+// Construit une série horaire interpolée à partir des 4 points SHOM du jour
+// Utilise une courbe sinusoïdale entre chaque point basse→haute→basse
+function buildSerieFromSHOM(shomData, offMin){
+  if(!shomData) return null;
+  const today=new Date(); today.setHours(0,0,0,0);
+  const tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
 
-// Niveau actuel en % de l'amplitude (0=basse, 100=haute)
-function getNiveauPct(pts, now){
-  const hautes=pts.filter(p=>p.haute);
-  const basses=pts.filter(p=>!p.haute);
-  if(!hautes.length||!basses.length) return 0;
-  const hMax=Math.max(...hautes.map(p=>p.h));
-  const hMin=Math.min(...basses.map(p=>p.h));
-  const hNow=tideH(now, lieu.off);
-  return Math.round(Math.max(0,Math.min(100,(hNow-hMin)/(hMax-hMin)*100)));
-}
+  // Récupère les données du lendemain aussi pour prolonger
+  const keyTomorrow=dateKey(tomorrow);
+  const shomTomorrow=SHOM[keyTomorrow];
 
-function barreNiveauHTML(pct, threshold_pct, pid){
-  // threshold_pct = seuil en % de l'amplitude
-  const tpct=pid==='bateau'?35:55;
-  // couleur curseur selon zone
-  const zone=pct>=tpct+20?'#1D9E75':pct>=tpct?'#EF9F27':'#E24B4A';
-  const label=pct>=tpct+20?'Eau présente 🟢':pct>=tpct?'Eau aux genoux 🟡':'Eau trop basse 🔴';
-  return `
-  <div style="background:#fff;border-radius:14px;padding:14px 15px;margin-bottom:10px;box-shadow:0 1px 6px rgba(10,61,92,.06)">
-    <div style="font-size:12px;font-weight:600;color:var(--bleu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Niveau d'eau actuel</div>
-    <div style="position:relative;height:18px;border-radius:99px;overflow:hidden;background:#f0f4f7;margin-bottom:8px">
-      <div style="position:absolute;left:0;top:0;height:100%;width:${tpct}%;background:#FCEBEB"></div>
-      <div style="position:absolute;left:${tpct}%;top:0;height:100%;width:${Math.min(20,100-tpct)}%;background:#FAEEDA"></div>
-      <div style="position:absolute;left:${Math.min(tpct+20,100)}%;top:0;height:100%;width:${Math.max(0,100-tpct-20)}%;background:#E1F5EE"></div>
-      <div style="position:absolute;top:50%;left:${pct}%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:${zone};border:2.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);z-index:2;transition:left .4s"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;font-size:10px;color:#8a9eaa;margin-bottom:8px">
-      <span>Basse</span><span>${pid==='bateau'?'Nav.':'Genoux'} (${tpct}%)</span><span>Haute</span>
-    </div>
-    <div style="font-size:13px;font-weight:600;color:${zone};text-align:center">${label} — ${pct}% de l'amplitude</div>
-  </div>`;
-}
-
-// ── VERDICTS ─────────────────────────────────────────────
-function verdictBassin(peaks, pts, now, pid){
-  const threshold=getThreshold(peaks, pid);
-  const hNow=tideH(now, lieu.off);
-  const inWindow=threshold!==null&&hNow>=threshold;
-
-  // Trouve quand l'eau va dépasser / redescendre sous le seuil
-  const upcoming=pts.filter(p=>p.time>now);
-  const nextAbove=upcoming.find(p=>p.h>=threshold);
-  const nextBelow=upcoming.find(p=>p.h<threshold&&inWindow);
-  const minToGood=nextAbove?(nextAbove.time-now)/60000:null;
-  const minToEnd=nextBelow?(nextBelow.time-now)/60000:null;
-  const fen=getFenetre(pts, threshold);
-
-  const fenTxt=fen.debut&&fen.fin
-    ?`Bonne eau de <strong>${fmtH(fen.debut)}</strong> à <strong>${fmtH(fen.fin)}</strong>`
-    :'';
-
-  if(inWindow&&minToEnd){
-    return{statut:'oui',emoji:'🟢',texte:'Oui, fonce !',cd:`bonne eau encore ${fmtCD(minToEnd)}`,classe:'g',
-      conseil:pid==='bateau'
-        ?`Tirant suffisant. Fenêtre jusqu'à ${fmtH(fen.fin||now)}.`
-        :`L'eau est là ! ${fenTxt}. Il te reste ${fmtCD(minToEnd)}.`,
-      fenTxt, barre:true};
+  // Construit la liste des points clés (basses et hautes) sur 36h
+  const points=[];
+  function addPoints(data, baseDate){
+    if(!data) return;
+    const [hBM,hBMh, hHM,hHMh,cHM, hBS,hBSh, hHS,hHSh,cHS]=data;
+    const bm=parseHeure(hBM,baseDate,offMin);
+    const hm=parseHeure(hHM,baseDate,offMin);
+    const bs=parseHeure(hBS,baseDate,offMin);
+    const hs=parseHeure(hHS,baseDate,offMin);
+    if(bm) points.push({t:bm,h:hBMh,haute:false});
+    if(hm) points.push({t:hm,h:hHMh,haute:true,coeff:cHM});
+    if(bs) points.push({t:bs,h:hBSh,haute:false});
+    if(hs){
+      // La haute du soir peut être le lendemain 0h-2h
+      const hsCopy=new Date(hs);
+      if(hsCopy.getHours()<6 && baseDate.getTime()===today.getTime()){
+        hsCopy.setDate(hsCopy.getDate()+1);
+      }
+      points.push({t:hsCopy,h:hHSh,haute:true,coeff:cHS});
+    }
   }
+  addPoints(shomData,today);
+  if(shomTomorrow) addPoints(shomTomorrow,tomorrow);
+
+  points.sort((a,b)=>a.t-b.t);
+  if(points.length<2) return null;
+
+  // Interpolation sinusoïdale entre points
+  const serie=[];
+  const startT=new Date(today);
+  const endT=new Date(today); endT.setHours(23,59,0,0);
+
+  for(let t=new Date(startT); t<=endT; t=new Date(t.getTime()+5*60000)){
+    // Trouve les deux points encadrants
+    let i=0;
+    while(i<points.length-1 && points[i+1].t<=t) i++;
+    if(i>=points.length-1){
+      serie.push({time:new Date(t),h:points[points.length-1].h});
+      continue;
+    }
+    const p0=points[i], p1=points[i+1];
+    const progress=(t-p0.t)/(p1.t-p0.t);
+    // Interpolation cosinusoïdale (lisse)
+    const mu=(1-Math.cos(progress*Math.PI))/2;
+    const h=p0.h*(1-mu)+p1.h*mu;
+    serie.push({time:new Date(t),h:Math.max(0,h)});
+  }
+  return {serie, points};
+}
+
+// ── FENÊTRE UTILE ─────────────────────────────────────────
+function getFenetreUtile(serie, seuil){
+  if(!serie) return{debut:null,fin:null};
+  const above=serie.filter(p=>p.h>=seuil);
+  if(!above.length) return{debut:null,fin:null};
+  // Vérifie que c'est une vraie fenêtre (<22h)
+  const debut=above[0].time;
+  const fin=above[above.length-1].time;
+  if((fin-debut)/60000>22*60) return{debut:null,fin:null};
+  return{debut,fin};
+}
+
+function getNiveauPct(serie, seuil, now){
+  if(!serie||!serie.length) return 0;
+  const hMin=Math.min(...serie.map(p=>p.h));
+  const hMax=Math.max(...serie.map(p=>p.h));
+  const hNow=serie.reduce((prev,cur)=>Math.abs(cur.time-now)<Math.abs(prev.time-now)?cur:prev).h;
+  const pct=Math.round((hNow-hMin)/(hMax-hMin)*100);
+  const seuilPct=Math.round((seuil-hMin)/(hMax-hMin)*100);
+  return{pct:Math.max(1,Math.min(99,pct)), seuilPct:Math.max(10,Math.min(90,seuilPct))};
+}
+
+// ── VERDICT BASSIN ────────────────────────────────────────
+function verdictBassin(serie, points, now, pid){
+  const seuil=SEUILS[pid]||2.0;
+  const fen=getFenetreUtile(serie,seuil);
+  const hNow=serie?serie.reduce((prev,cur)=>Math.abs(cur.time-now)<Math.abs(prev.time-now)?cur:prev).h:0;
+  const inWindow=hNow>=seuil;
+  const montee=serie&&serie.length>6?(serie[Math.floor(serie.length/2+1)].h>serie[Math.floor(serie.length/2-1)].h):true;
+
+  // Prochaine haute/basse
+  const futurePoints=points?points.filter(p=>p.t>now):[];
+  const nextH=futurePoints.find(p=>p.haute);
+  const nextB=futurePoints.find(p=>!p.haute);
+  const prevH=points?[...points].reverse().find(p=>p.haute&&p.t<=now):null;
+
+  // Alerte bateau : si en fenêtre mais eau qui descend → prévoir retour
+  const alerteBateau=pid==='bateau'&&inWindow&&!montee&&fen.fin?
+    `⚠️ Eau en descente — prévoir le retour avant ${fmtH(fen.fin)} !`:null;
+
   if(inWindow){
-    return{statut:'oui',emoji:'🟢',texte:'Oui, fonce !',cd:`eau présente`,classe:'g',
-      conseil:pid==='bateau'?`Fenêtre de navigation ouverte.`:`L'eau est là ! ${fenTxt}.`,
-      fenTxt, barre:true};
-  }
-  if(minToGood!==null&&minToGood<120){
-    return{statut:'bientot',emoji:'🟡',texte:'Bientôt !',cd:`eau praticable dans ${fmtCD(minToGood)}`,classe:'o',
+    const minLeft=fen.fin?(fen.fin-now)/60000:null;
+    return{
+      statut:'oui',emoji:'🟢',texte:'Oui, fonce !',
+      cd:minLeft?`encore ${fmtCD(minLeft)} de bonne eau`:'eau présente',
+      classe:'g',
       conseil:pid==='bateau'
-        ?`Dans ${fmtCD(minToGood)} tu pourras appareiller. ${fenTxt}.`
-        :`Dans ${fmtCD(minToGood)} l'eau sera aux genoux. ${fenTxt}.`,
-      fenTxt, barre:true};
+        ?`Tirant d'eau suffisant. ${fen.fin?'Fenêtre jusqu\'à '+fmtH(fen.fin)+'.':''}`
+        :`L'eau est là ! ${fen.debut&&fen.fin?'Bonne eau de '+fmtH(fen.debut)+' à '+fmtH(fen.fin)+'.':''}`,
+      alerte:alerteBateau, fen, nextH, nextB, prevH
+    };
   }
-  return{statut:'non',emoji:'🔴',texte:'Pas encore...',cd:minToGood?`bonne eau dans ${fmtCD(minToGood)}`:'marée basse',classe:'r',
+
+  // Pas encore / plus
+  const minToGood=fen.debut&&fen.debut>now?(fen.debut-now)/60000:null;
+  if(minToGood&&minToGood<240){
+    return{
+      statut:'bientot',emoji:'🟡',texte:'Bientôt !',
+      cd:`eau praticable dans ${fmtCD(minToGood)}`,
+      classe:'o',
+      conseil:pid==='bateau'
+        ?`Dans ${fmtCD(minToGood)} tu pourras appareiller. ${fen.fin?'Jusqu\'à '+fmtH(fen.fin)+'.':''}`
+        :`Dans ${fmtCD(minToGood)} l'eau sera suffisante. ${fen.fin?'Bonne eau jusqu\'à '+fmtH(fen.fin)+'.':''}`,
+      alerte:null, fen, nextH, nextB, prevH
+    };
+  }
+
+  return{
+    statut:'non',emoji:'🔴',texte:'Pas encore...',
+    cd:minToGood?`bonne eau dans ${fmtCD(minToGood)}`:'marée basse — ramassage de coques 🦪',
+    classe:'r',
     conseil:pid==='bateau'
-      ?`Tirant insuffisant.${minToGood?' Fenêtre dans '+fmtCD(minToGood)+'.':''}`
-      :`Eau trop basse.${minToGood?' Bonne eau dans '+fmtCD(minToGood)+'.':''} Château de sable en attendant ! ${fenTxt}.`,
-    fenTxt, barre:true};
+      ?`Tirant insuffisant.${minToGood?' Fenêtre dans '+fmtCD(minToGood)+'.':''} Ne pas sortir.`
+      :`Eau trop basse pour se baigner.${minToGood?' La prochaine fenêtre est dans '+fmtCD(minToGood)+'.':''} Profite de l'estran !`,
+    alerte:null, fen, nextH, nextB, prevH
+  };
 }
-function verdictSurf(peaks,now){
-  const prevB=[...peaks].reverse().find(p=>!p.haute&&p.time<=now);
-  const nextB=peaks.find(p=>!p.haute&&p.time>now);
+
+// ── VERDICT SURF ──────────────────────────────────────────
+function verdictSurf(points, now){
+  const prevB=points?[...points].reverse().find(p=>!p.haute&&p.t<=now):null;
+  const nextB=points?points.find(p=>!p.haute&&p.t>now):null;
+  const nextH=points?points.find(p=>p.haute&&p.t>now):null;
   if(prevB){
-    const ms=(now-prevB.time)/60000;
+    const ms=(now-prevB.t)/60000;
     if(ms>=0&&ms<180){
-      return{statut:'oui',emoji:'🟢',texte:'Fonce surfer !',cd:`encore ${fmtCD(180-ms)} de bonne session`,classe:'g',
-        phase:`Montée +${Math.round(ms)} min`,conseil:`Marée montante — vagues longues et régulières. Encore ${fmtCD(180-ms)} de bonne fenêtre.`};
+      return{statut:'oui',emoji:'🟢',texte:'Fonce surfer !',cd:`encore ${fmtCD(180-ms)} de bonne session`,classe:'g',phase:`Montée +${Math.round(ms)} min`,conseil:`Marée montante — vagues longues. Encore ${fmtCD(180-ms)} de fenêtre.`,nextH,nextB};
     }
   }
   if(nextB){
-    const ml=(nextB.time-now)/60000;
-    if(ml<120) return{statut:'bientot',emoji:'🟡',texte:'Bientôt !',cd:`surf praticable dans ${fmtCD(ml)}`,classe:'o',
-      phase:'Descente',conseil:`La marée redescend. Dans ${fmtCD(ml)} les conditions seront idéales.`};
-    return{statut:'non',emoji:'🔴',texte:'Pas idéal...',cd:`bonne session dans ${fmtCD(ml)}`,classe:'r',
-      phase:'Marée haute',conseil:`Marée trop haute — vagues courtes. Bon créneau dans ${fmtCD(ml)}.`};
+    const ml=(nextB.t-now)/60000;
+    if(ml<120) return{statut:'bientot',emoji:'🟡',texte:'Bientôt !',cd:`surf dans ${fmtCD(ml)}`,classe:'o',phase:'Descente',conseil:`La marée redescend. Dans ${fmtCD(ml)} les conditions seront idéales.`,nextH,nextB};
+    return{statut:'non',emoji:'🔴',texte:'Pas idéal...',cd:`bonne session dans ${fmtCD(ml)}`,classe:'r',phase:'Marée haute',conseil:`Trop haute — vagues courtes. Prochaine bonne session dans ${fmtCD(ml)}.`,nextH,nextB};
   }
-  return{statut:'non',emoji:'🔴',texte:'Pas idéal...',cd:'marée haute',classe:'r',phase:'--',conseil:'Attends la descente pour de meilleures vagues.'};
+  return{statut:'non',emoji:'🔴',texte:'Pas idéal...',cd:'marée haute',classe:'r',conseil:'Attends la descente.',nextH,nextB};
 }
-function verdictBaignadeOcean(peaks,now){
-  const nextH=peaks.find(p=>p.haute&&p.time>now);
-  const prevH=[...peaks].reverse().find(p=>p.haute&&p.time<=now);
-  const minToHigh=nextH?(nextH.time-now)/60000:null;
-  const minSinceHigh=prevH?(now-prevH.time)/60000:null;
-  if(minSinceHigh!==null&&minSinceHigh<180) return{statut:'oui',emoji:'🟢',texte:'Baignade OK !',cd:`encore ${fmtCD(180-minSinceHigh)} d'eau calme`,classe:'g',
-    conseil:'Eau calme et claire autour de la marée haute. Restez dans les zones surveillées.'};
-  if(minToHigh!==null&&minToHigh<120) return{statut:'bientot',emoji:'🟡',texte:'Bientôt !',cd:`eau calme dans ${fmtCD(minToHigh)}`,classe:'o',
-    conseil:`La mer monte. Dans ${fmtCD(minToHigh)} les conditions seront meilleures. Prudence avec les courants.`};
-  return{statut:'non',emoji:'🔴',texte:'Prudence !',cd:'risque de baïnes',classe:'r',
-    conseil:'Marée basse — risque de baïnes et courants. Baignade déconseillée. Attendez la montée.'};
+
+// ── VERDICT BAIGNADE OCÉAN ────────────────────────────────
+function verdictBaignadeOcean(points, now){
+  const nextH=points?points.find(p=>p.haute&&p.t>now):null;
+  const prevH=points?[...points].reverse().find(p=>p.haute&&p.t<=now):null;
+  const minSinceHigh=prevH?(now-prevH.t)/60000:null;
+  const minToHigh=nextH?(nextH.t-now)/60000:null;
+  if(minSinceHigh!==null&&minSinceHigh<180){
+    return{statut:'oui',emoji:'🟢',texte:'Baignade OK !',cd:`encore ${fmtCD(180-minSinceHigh)} d'eau calme`,classe:'g',conseil:'Eau calme autour de la marée haute. Restez dans les zones surveillées.',nextH};
+  }
+  if(minToHigh!==null&&minToHigh<120){
+    return{statut:'bientot',emoji:'🟡',texte:'Bientôt !',cd:`eau calme dans ${fmtCD(minToHigh)}`,classe:'o',conseil:`La mer monte. Dans ${fmtCD(minToHigh)} meilleures conditions. Prudence avec les courants.`,nextH};
+  }
+  return{statut:'non',emoji:'🔴',texte:'Prudence !',cd:'risque de baïnes',classe:'r',conseil:'Marée basse — risque de baïnes et courants. Baignade déconseillée. Attendez la montée.',nextH};
 }
 
 // ── RENDER ────────────────────────────────────────────────
 function render(){
-  const pts=buildSeries(lieu.off), peaks=findPeaks(pts), now=new Date();
-  const todayPts=pts.filter(p=>p.time.toDateString()===now.toDateString());
-  const pid=profil.id, isOcean=mode==='ocean';
-  const nextH=peaks.find(p=>p.haute&&p.time>now);
-  const prevH=[...peaks].reverse().find(p=>p.haute&&p.time<=now);
-  const nextB=peaks.find(p=>!p.haute&&p.time>now);
-  const prevB=[...peaks].reverse().find(p=>!p.haute&&p.time<=now);
-  const refH=prevH||nextH, refB=prevB||nextB;
+  const now=new Date();
+  const key=dateKey(now);
+  const shomData=SHOM[key];
+  const offMin=mode==='bassin'?(OFFSETS_BASSIN[lieu]||0):0;
+  const result=shomData?buildSerieFromSHOM(shomData,offMin):null;
+  const serie=result?result.serie:null;
+  const points=result?result.points:null;
+  const pid=profil.id;
+  const isOcean=mode==='ocean';
 
-  let v, acts, bps=BONPLANS[mode];
-  if(pid==='surf'){v=verdictSurf(peaks,now);acts=ACTIVITES.surf[v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
-  else if(pid==='baignade_ocean'){v=verdictBaignadeOcean(peaks,now);acts=ACTIVITES.baignade_ocean[v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
-  else{v=verdictBassin(peaks,pts,now,pid);acts=ACTIVITES[pid][v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
-  const niveauPct=(!isOcean)?getNiveauPct(pts,now):null;
-  const tpct=pid==='bateau'?35:55;
+  // Pas de données SHOM pour cette date
+  if(!shomData||!serie){
+    document.getElementById('main').innerHTML=`
+    <div style="background:#FAEEDA;border-radius:14px;padding:20px;text-align:center;margin-bottom:10px">
+      <div style="font-size:36px;margin-bottom:8px">📅</div>
+      <div style="font-weight:600;color:var(--bleu);margin-bottom:6px">Données non disponibles</div>
+      <div style="font-size:13px;color:#6b4400">Les données SHOM pour cette date ne sont pas encore intégrées. Mise à jour bientôt !</div>
+    </div>`;
+    return;
+  }
 
-  // SVG
-  const W=300,H=70, minV=Math.min(...todayPts.map(x=>x.h)), maxV=Math.max(...todayPts.map(x=>x.h)), rng=maxV-minV||1;
-  const toX=i=>i/(todayPts.length-1)*W, toY=h=>H-4-((h-minV)/rng)*(H-14)+2;
-  const poly=todayPts.map((p,i)=>`${toX(i).toFixed(1)},${toY(p.h).toFixed(1)}`).join(' ');
-  const sc=isOcean?'#1A6B9A':'#1D9E75', zc=isOcean?'#B5D4F4':'#9FE1CB';
+  let v, acts, bps=mode==='ocean'?BONPLANS_OCEAN:BONPLANS_BASSIN;
+  if(pid==='surf'){v=verdictSurf(points,now);acts=ACTIVITES.surf[v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
+  else if(pid==='baignade_ocean'){v=verdictBaignadeOcean(points,now);acts=ACTIVITES.baignade_ocean[v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
+  else{v=verdictBassin(serie,points,now,pid);acts=ACTIVITES[pid][v.statut==='oui'?'g':v.statut==='bientot'?'o':'r'];}
+
+  // SVG courbe
+  const W=300,H=70;
+  const minV=Math.min(...serie.map(x=>x.h));
+  const maxV=Math.max(...serie.map(x=>x.h));
+  const rng=maxV-minV||1;
+  const toX=i=>i/(serie.length-1)*W;
+  const toY=h=>H-4-((h-minV)/rng)*(H-14)+2;
+  const poly=serie.map((p,i)=>`${toX(i).toFixed(1)},${toY(p.h).toFixed(1)}`).join(' ');
+  const sc=isOcean?'#1A6B9A':'#1D9E75';
+  const zc=isOcean?'#B5D4F4':'#9FE1CB';
+
+  // Zone fenêtre sur la courbe
   let zones='';
-  if(pid==='surf'){
-    peaks.filter(p=>!p.haute&&p.time.toDateString()===now.toDateString()).forEach(p=>{
-      const pm=p.time.getHours()*60+p.time.getMinutes();
-      const x1=Math.max(0,(pm/1440)*W), x2=Math.min(W,((pm+180)/1440)*W);
-      zones+=`<rect x="${x1.toFixed(1)}" y="0" width="${(x2-x1).toFixed(1)}" height="${H}" fill="${zc}" fill-opacity="0.4" rx="3"/>`;
-    });
-  } else {
-    const refs=pid==='baignade_ocean'?peaks.filter(p=>p.haute):peaks.filter(p=>p.haute);
-    refs.filter(p=>p.time.toDateString()===now.toDateString()).forEach(p=>{
-      const pm=p.time.getHours()*60+p.time.getMinutes(), fen=pid==='baignade_ocean'?180:profil.fen;
-      const x1=Math.max(0,((pm-fen)/1440)*W), x2=Math.min(W,((pm+fen)/1440)*W);
+  if(!isOcean&&v.fen&&v.fen.debut&&v.fen.fin){
+    const x1=((v.fen.debut.getHours()*60+v.fen.debut.getMinutes())/1440*W);
+    const x2=((v.fen.fin.getHours()*60+v.fen.fin.getMinutes())/1440*W);
+    zones=`<rect x="${x1.toFixed(1)}" y="0" width="${(x2-x1).toFixed(1)}" height="${H}" fill="${zc}" fill-opacity="0.5" rx="3"/>`;
+  }
+  if(isOcean&&pid==='surf'&&points){
+    points.filter(p=>!p.haute).forEach(p=>{
+      const pm=p.t.getHours()*60+p.t.getMinutes();
+      const x1=(pm/1440)*W, x2=Math.min(W,((pm+180)/1440)*W);
       zones+=`<rect x="${x1.toFixed(1)}" y="0" width="${(x2-x1).toFixed(1)}" height="${H}" fill="${zc}" fill-opacity="0.4" rx="3"/>`;
     });
   }
+
+  // Ligne seuil
+  const seuilY=!isOcean?toY(SEUILS[pid]||2.0):null;
+  const seuilLine=seuilY?`<line x1="0" y1="${seuilY.toFixed(1)}" x2="${W}" y2="${seuilY.toFixed(1)}" stroke="#EF9F27" stroke-width="1" stroke-dasharray="4,3" opacity="0.7"/>`:'';
+
   const nowMin=now.getHours()*60+now.getMinutes();
-  const cx=((nowMin/1440)*W).toFixed(1), cy=toY(tideH(now,lieu.off)).toFixed(1);
+  const cx=((nowMin/1440)*W).toFixed(1);
+  const nowSerieH=serie.reduce((prev,cur)=>Math.abs(cur.time-now)<Math.abs(prev.time-now)?cur:prev).h;
+  const cy=toY(nowSerieH).toFixed(1);
+
+  // Barre de niveau
+  let barreHTML='';
+  if(!isOcean){
+    const {pct,seuilPct}=getNiveauPct(serie,SEUILS[pid]||2.0,now);
+    const zone=pct>=seuilPct+15?'#1D9E75':pct>=seuilPct?'#EF9F27':'#E24B4A';
+    const label=pct>=seuilPct+15?'Eau présente 🟢':pct>=seuilPct?'Eau aux genoux 🟡':'Eau trop basse 🔴';
+    barreHTML=`
+    <div class="barre-card">
+      <div class="fen-title">Niveau d'eau actuel</div>
+      <div style="position:relative;height:18px;border-radius:99px;overflow:hidden;background:#f0f4f7;margin-bottom:8px">
+        <div style="position:absolute;left:0;top:0;height:100%;width:${seuilPct}%;background:#FCEBEB"></div>
+        <div style="position:absolute;left:${seuilPct}%;top:0;height:100%;width:${Math.min(15,100-seuilPct)}%;background:#FAEEDA"></div>
+        <div style="position:absolute;left:${Math.min(seuilPct+15,100)}%;top:0;height:100%;width:${Math.max(0,100-seuilPct-15)}%;background:#E1F5EE"></div>
+        <div style="position:absolute;top:50%;left:${pct}%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:${zone};border:2.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);z-index:2"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#8a9eaa;margin-bottom:6px">
+        <span>Basse</span><span>${pid==='bateau'?'Navigable':'Genoux'}</span><span>Haute</span>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:${zone};text-align:center">${label}</div>
+    </div>`;
+  }
+
+  // Fenêtre utile
+  let fenetreHTML='';
+  if(!isOcean&&v.fen&&v.fen.debut&&v.fen.fin){
+    fenetreHTML=`
+    <div class="fenetre-card">
+      <div class="fen-title">⏱ Plage d'eau utile aujourd'hui</div>
+      <div class="fen-slots">
+        <div class="fen-slot${now<v.fen.debut?' ':now>v.fen.fin?' passed':' active'}">
+          <div class="fen-slot-lbl">Début</div>
+          <div class="fen-slot-time">${fmtH(v.fen.debut)}</div>
+          <div class="fen-slot-info">${now<v.fen.debut?'dans '+fmtCD((v.fen.debut-now)/60000):'passé'}</div>
+        </div>
+        <div style="display:flex;align-items:center;font-size:20px;color:var(--teal);padding:0 4px">→</div>
+        <div class="fen-slot${now>=v.fen.debut&&now<=v.fen.fin?' active':now>v.fen.fin?' passed':''}">
+          <div class="fen-slot-lbl">Fin</div>
+          <div class="fen-slot-time">${fmtH(v.fen.fin)}</div>
+          <div class="fen-slot-info">${now<v.fen.fin?'encore '+fmtCD((v.fen.fin-now)/60000):'terminé'}</div>
+        </div>
+        <div style="display:flex;align-items:center;font-size:18px;color:#8a9eaa;padding:0 4px">⏱</div>
+        <div class="fen-slot">
+          <div class="fen-slot-lbl">Durée</div>
+          <div class="fen-slot-time">${fmtCD((v.fen.fin-v.fen.debut)/60000)}</div>
+          <div class="fen-slot-info">${pid==='bateau'?'nav. possible':'eau suffisante'}</div>
+        </div>
+      </div>
+    </div>`;
+  }
 
   const bp=bps[bpIdx%bps.length];
-  const bpHtml=v.statut==='oui'?`<div class="bonplan"><div class="bonplan-icon">${bp.icon}</div><div class="bonplan-txt"><strong>${bp.titre}</strong>${bp.txt}<a class="bonplan-cta" href="${bp.url}">${bp.cta}</a></div></div>`:'';
-  const surfExtra=pid==='surf'&&v.phase?`<div class="surf-cond"><div class="surf-title">Conditions surf</div><div class="surf-row"><div class="surf-box"><div class="surf-box-l">Phase</div><div class="surf-box-v">${v.phase}</div></div><div class="surf-box"><div class="surf-box-l">Prochaine basse</div><div class="surf-box-v">${nextB?fmtH(nextB.time):'--:--'}</div></div><div class="surf-box"><div class="surf-box-l">Prochaine haute</div><div class="surf-box-v">${nextH?fmtH(nextH.time):'--:--'}</div></div></div></div>`:'';
-  const barreHTML=(!isOcean&&v.barre&&niveauPct!==null)?barreNiveauHTML(niveauPct,tpct,pid):'';
-  const fenHTML=(!isOcean&&v.fenTxt)?`<div style="background:#f4f7fa;border-radius:10px;padding:9px 13px;margin-bottom:10px;font-size:13px;color:#2d4a5c;text-align:center">${v.fenTxt}</div>`:'';
+  const bpHTML=v.statut==='oui'?`<div class="bonplan"><div class="bonplan-icon">${bp.icon}</div><div class="bonplan-txt"><strong>${bp.titre}</strong>${bp.txt}<a class="bonplan-cta" href="${bp.url}">${bp.cta}</a></div></div>`:'';
+  const alerteHTML=v.alerte?`<div class="alerte">⚠️ <span>${v.alerte}</span></div>`:'';
+
+  // Points hautes/basses du jour
+  const refH=points?([...points].reverse().find(p=>p.haute&&p.t<=now)||points.find(p=>p.haute)):null;
+  const refB=points?([...points].reverse().find(p=>!p.haute&&p.t<=now)||points.find(p=>!p.haute)):null;
+  const nextHpt=points?points.find(p=>p.haute&&p.t>now):null;
+  const nextBpt=points?points.find(p=>!p.haute&&p.t>now):null;
 
   document.getElementById('main').innerHTML=`
-<div style="text-align:center;margin-bottom:8px"><span class="mode-badge badge-${mode}">${isOcean?'🌊 Océan':'🏖️ Bassin'} · ${lieu.n}</span></div>
-<div class="verdict"><span class="v-em">${v.emoji}</span><div class="v-txt">${v.texte}</div><span class="v-cd cd-${v.classe}">${v.cd}</span></div>
+<div style="text-align:center;margin-bottom:8px">
+  <span style="display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:${isOcean?'var(--surf-light)':'#E1F5EE'};color:${isOcean?'var(--surf)':'var(--bleu)'}">
+    ${isOcean?'🌊 Océan':'🏖️ Bassin'} · ${lieu}
+  </span>
+</div>
+<div class="verdict">
+  <span class="v-em">${v.emoji}</span>
+  <div class="v-txt">${v.texte}</div>
+  <span class="v-cd cd-${v.classe}">${v.cd}</span>
+</div>
 <div class="conseil ${v.classe}">${v.conseil}</div>
-${barreHTML}${fenHTML}${bpHtml}${surfExtra}
-<div class="activites"><div class="act-title">En ce moment — ${lieu.n}</div>${acts.map(a=>`<div class="act-item">${a}</div>`).join('')}</div>
+${alerteHTML}
+${fenetreHTML}
+${barreHTML}
+${bpHTML}
+<div class="activites">
+  <div class="act-title">En ce moment — ${lieu}</div>
+  ${acts.map(a=>`<div class="act-item">${a}</div>`).join('')}
+</div>
 <div class="courbe-card">
-  <div class="courbe-lbl">${now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})} · zone colorée = bonne fenêtre</div>
+  <div style="font-size:11px;color:#6a8090;margin-bottom:10px">
+    ${now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}
+    ${!isOcean?'· <span style="color:#EF9F27">— — —</span> seuil eau utile':''}
+  </div>
   <div style="position:relative;height:70px;width:100%">
     <svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="none">
       ${zones}
       <polyline points="${poly}" fill="none" stroke="${sc}" stroke-width="2"/>
+      ${seuilLine}
       <line x1="${cx}" y1="0" x2="${cx}" y2="${H}" stroke="${sc}" stroke-width="1.5" stroke-dasharray="3,2"/>
       <circle cx="${cx}" cy="${cy}" r="5" fill="${sc}" stroke="#fff" stroke-width="1.5"/>
     </svg>
   </div>
   <div class="time-axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span></div>
   <div class="tide-boxes">
-    <div class="tb"><div class="tb-l">${refB&&refB.time<=now?'Dernière basse':'Prochaine basse'}</div><div class="tb-v">${refB?fmtH(refB.time):'--:--'}</div><div class="tb-s">${refB?refB.h.toFixed(2)+' m':''}</div></div>
-    <div class="tb"><div class="tb-l">${refH&&refH.time<=now?'Dernière haute':'Prochaine haute'}</div><div class="tb-v">${refH?fmtH(refH.time):'--:--'}</div><div class="tb-s">${refH?'Coeff. ~'+coeff(refH.h):''}</div></div>
+    <div class="tb">
+      <div class="tb-l">${refB&&refB.t<=now?'Dernière basse':'Prochaine basse'}</div>
+      <div class="tb-v">${refB?fmtH(refB.t):'--:--'}</div>
+      <div class="tb-s">${refB?refB.h.toFixed(2)+' m':''}</div>
+    </div>
+    <div class="tb">
+      <div class="tb-l">${refH&&refH.t<=now?'Dernière haute':'Prochaine haute'}</div>
+      <div class="tb-v">${refH?fmtH(refH.t):'--:--'}</div>
+      <div class="tb-s">${refH?'Coeff. '+refH.coeff:''}</div>
+    </div>
   </div>
 </div>
-<div class="next-row">
-  ${nextH?`<div class="nb"><div class="nb-l">Prochaine haute</div><div class="nb-v">${fmtH(nextH.time)}</div></div>`:''}
-  ${nextB?`<div class="nb"><div class="nb-l">Prochaine basse</div><div class="nb-v">${fmtH(nextB.time)}</div></div>`:''}
+<div style="display:flex;gap:8px;margin-bottom:10px">
+  ${nextHpt?`<div style="flex:1;background:#fff;border-radius:12px;padding:11px;text-align:center;box-shadow:0 1px 6px rgba(10,61,92,.06)"><div style="font-size:10px;color:#7a8e9a">Prochaine haute</div><div style="font-size:15px;font-weight:700;color:var(--bleu);font-family:monospace;margin-top:2px">${fmtH(nextHpt.t)}</div><div style="font-size:10px;color:#8a9eaa;margin-top:2px">coeff. ${nextHpt.coeff}</div></div>`:''}
+  ${nextBpt?`<div style="flex:1;background:#fff;border-radius:12px;padding:11px;text-align:center;box-shadow:0 1px 6px rgba(10,61,92,.06)"><div style="font-size:10px;color:#7a8e9a">Prochaine basse</div><div style="font-size:15px;font-weight:700;color:var(--bleu);font-family:monospace;margin-top:2px">${fmtH(nextBpt.t)}</div></div>`:''}
 </div>
-<button class="rfbtn" onclick="refresh()">↻ Actualiser</button>`;
+<div class="shom-badge"><span>📊 Données SHOM officielles 2026 · Arcachon</span></div>
+<button class="rfbtn" onclick="render()">↻ Actualiser</button>`;
 }
 
 function renderLieux(){
   document.getElementById('lieux').innerHTML=LIEUX[mode].map(l=>
-    `<span class="cb${l.n===lieu.n?' on-'+mode:''}" onclick="selLieu('${l.n}')">${l.n}</span>`).join('');
+    `<span class="cb${l===lieu?' on-'+mode:''}" onclick="selLieu('${l}')">${l}</span>`).join('');
 }
 function renderProfils(){
   document.getElementById('profiles').innerHTML=PROFILS[mode].map(p=>
@@ -494,29 +668,24 @@ function setMode(m){
   document.getElementById('btn-ocean').className='mode-btn'+(m==='ocean'?' on':'');
   renderLieux(); renderProfils(); render();
 }
-function selLieu(n){lieu=LIEUX[mode].find(l=>l.n===n);renderLieux();render();}
+function selLieu(l){lieu=l;renderLieux();render();}
 function selProfil(id){profil=PROFILS[mode].find(p=>p.id===id);renderProfils();render();}
 function refresh(){bpIdx++;render();}
 
 renderLieux(); renderProfils(); render();
-setInterval(()=>render(), 5*60*1000);
+setInterval(()=>render(),60000); // refresh toutes les minutes
 
-// ── PWA INSTALL PROMPT ────────────────────────────────────
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt', e=>{
-  e.preventDefault(); deferredPrompt=e;
-  document.getElementById('install-banner').style.display='flex';
-});
-document.getElementById('install-btn').addEventListener('click', async()=>{
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const {outcome}=await deferredPrompt.userChoice;
-  deferredPrompt=null;
-  document.getElementById('install-banner').style.display='none';
-});
-window.addEventListener('appinstalled',()=>{
-  document.getElementById('install-banner').style.display='none';
-});
+// Horloge
+function tick(){
+  const now=new Date();
+  const el=document.getElementById('horloge');
+  if(el) el.textContent=`${now.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}
+tick(); setInterval(tick,1000);
+
+// PWA install
+let dp=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;document.getElementById('install-banner')&&(document.getElementById('install-banner').style.display='flex');});
 </script>
 </body>
 </html>
