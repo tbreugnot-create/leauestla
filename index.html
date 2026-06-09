@@ -105,10 +105,17 @@ footer a{color:var(--soleil);text-decoration:none}
 </div>
 <div class="lieux" id="lieux"></div>
 <div class="profiles" id="profiles"></div>
-<div id="install-tip" style="display:none;background:#fff;border-bottom:1px solid #e8edf0;padding:10px 14px;font-size:12px;color:#4a6070;display:flex;align-items:center;gap:10px">
-  <span style="font-size:20px" id="install-icon">📱</span>
-  <span id="install-msg"></span>
-  <button onclick="document.getElementById('install-tip').style.display='none'" style="margin-left:auto;background:none;border:none;font-size:18px;color:#aaa;cursor:pointer;flex-shrink:0">×</button>
+<div id="install-tip" style="background:#E1F5EE;border-bottom:1px solid #b2dfcc;padding:10px 14px;display:flex;align-items:flex-start;gap:10px">
+  <span style="font-size:18px;flex-shrink:0">📲</span>
+  <div style="flex:1;font-size:12px;color:#0A3D5C;line-height:1.6;font-weight:600">
+    <div>Installe l'app gratuitement !</div>
+    <div style="font-weight:400;color:#1D9E75;margin-top:2px">
+      📱 iPhone : tape <strong>↑ Partager</strong> → <em>Sur l'écran d'accueil</em><br/>
+      🤖 Android : tape <strong>⋮</strong> → <em>Ajouter à l'écran d'accueil</em><br/>
+      💻 PC/Mac : clique <strong>➕</strong> dans la barre d'adresse
+    </div>
+  </div>
+  <button onclick="document.getElementById('install-tip').style.display='none'" style="background:none;border:none;font-size:20px;color:#7a8e9a;cursor:pointer;padding:0;flex-shrink:0;line-height:1">×</button>
 </div>
 <main id="main"></main>
 <footer>
