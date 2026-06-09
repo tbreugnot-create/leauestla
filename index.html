@@ -105,6 +105,11 @@ footer a{color:var(--soleil);text-decoration:none}
 </div>
 <div class="lieux" id="lieux"></div>
 <div class="profiles" id="profiles"></div>
+<div id="install-tip" style="display:none;background:#fff;border-bottom:1px solid #e8edf0;padding:10px 14px;font-size:12px;color:#4a6070;display:flex;align-items:center;gap:10px">
+  <span style="font-size:20px" id="install-icon">📱</span>
+  <span id="install-msg"></span>
+  <button onclick="document.getElementById('install-tip').style.display='none'" style="margin-left:auto;background:none;border:none;font-size:18px;color:#aaa;cursor:pointer;flex-shrink:0">×</button>
+</div>
 <main id="main"></main>
 <footer>
   <div>🌊 <strong style="color:#fff">leauestla.fr</strong> — Bassin d'Arcachon · Côte Atlantique</div>
