@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="L'eau est là !"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230A3D5C'/%3E%3Ccircle cx='32' cy='22' r='10' fill='%23F5C842'/%3E%3Cpath d='M2 42 Q16 34 32 42 Q48 50 62 42 L62 64 L2 64 Z' fill='%235DCAA5'/%3E%3Cpath d='M2 50 Q16 42 32 50 Q48 58 62 50 L62 64 L2 64 Z' fill='%231D9E75'/%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230A3D5C'/%3E%3Ccircle cx='90' cy='62' r='28' fill='%23F5C842'/%3E%3Cpath d='M0 115 Q45 95 90 115 Q135 135 180 115 L180 180 L0 180 Z' fill='%235DCAA5'/%3E%3Cpath d='M0 138 Q45 118 90 138 Q135 158 180 138 L180 180 L0 180 Z' fill='%231D9E75'/%3E%3C/svg%3E"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --bleu:#0A3D5C;--teal:#1D9E75;--eau:#5DCAA5;--mousse:#9FE1CB;
@@ -18,11 +19,13 @@
   --surf:#1A6B9A;--surf-light:#E6F1FB;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f7;color:#05202F}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:#f0f4f7;color:#05202F}
 .app{max-width:440px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
-header{background:var(--bleu);padding:12px 16px 10px;color:#fff;text-align:center}
-.logo-txt{font-family:Georgia,serif;font-size:24px;font-weight:700;color:#fff}
-.logo-sub{font-size:10px;letter-spacing:3px;color:var(--mousse);margin-top:2px}
+header{background:linear-gradient(170deg,#0A3D5C 60%,#0d5a7a 100%);color:#fff;text-align:center;overflow:hidden;padding-bottom:0}
+.header-inner{padding:22px 16px 10px}
+.logo-txt{font-family:'Nunito',sans-serif;font-size:32px;font-weight:900;color:#fff;line-height:1.1}
+.logo-txt span{color:var(--soleil)}
+.logo-sub{font-size:11px;letter-spacing:2px;color:var(--mousse);margin-top:4px;font-weight:700;text-transform:uppercase}
 .mode-bar{display:flex;background:var(--bleu);padding:0 12px 12px;gap:8px}
 .mode-btn{flex:1;padding:9px;border-radius:12px;border:1.5px solid rgba(255,255,255,.25);font-size:13px;font-weight:600;cursor:pointer;text-align:center;color:rgba(255,255,255,.6);background:transparent;transition:all .15s;font-family:inherit}
 .mode-btn.on{background:#fff;color:var(--bleu);border-color:#fff}
@@ -608,6 +611,26 @@ function render(){
   <span class="v-em">${v.emoji}</span>
   <div class="v-txt">${v.texte}</div>
   <span class="v-cd cd-${v.classe}">${v.cd}</span>
+  ${(!isOcean&&v.fen&&v.fen.debut&&v.fen.fin)?`
+  <div style="margin-top:12px;background:#f4f7fa;border-radius:14px;padding:12px 16px;display:inline-block;min-width:220px">
+    <div style="font-size:11px;color:#7a8e9a;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">🏖️ Plage utile aujourd'hui</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+      <div>
+        <div style="font-size:11px;color:#7a8e9a">Eau à partir de</div>
+        <div style="font-size:26px;font-weight:900;color:var(--bleu);font-family:'Nunito',sans-serif;line-height:1">${fmtH(v.fen.debut)}</div>
+      </div>
+      <div style="font-size:22px;color:var(--teal)">→</div>
+      <div>
+        <div style="font-size:11px;color:#7a8e9a">Jusqu'à</div>
+        <div style="font-size:26px;font-weight:900;color:var(--bleu);font-family:'Nunito',sans-serif;line-height:1">${fmtH(v.fen.fin)}</div>
+      </div>
+      <div style="font-size:22px;color:#8a9eaa">·</div>
+      <div>
+        <div style="font-size:11px;color:#7a8e9a">Durée</div>
+        <div style="font-size:18px;font-weight:800;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1">${fmtCD((v.fen.fin-v.fen.debut)/60000)}</div>
+      </div>
+    </div>
+  </div>`:''}
 </div>
 <div class="conseil ${v.classe}">${v.conseil}</div>
 ${alerteHTML}
