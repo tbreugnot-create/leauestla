@@ -82,6 +82,10 @@ main{flex:1;padding:12px}
 .rfbtn{width:100%;padding:12px;border-radius:12px;border:1.5px solid #dde4ea;background:#fff;color:#4a6070;cursor:pointer;font-size:14px;font-weight:700;margin-bottom:10px;font-family:'Nunito',sans-serif}
 .shom-badge{text-align:center;font-size:10px;color:#8a9eaa;margin-bottom:8px}
 .shom-badge span{background:#f4f7fa;border-radius:20px;padding:3px 10px}
+.day-selector{display:flex;gap:8px;padding:10px 12px;background:#fff;border-bottom:1px solid #e8edf0;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.day-selector::-webkit-scrollbar{display:none}
+.day-chip{display:inline-block;flex-shrink:0;padding:8px 15px;border-radius:20px;border:1.5px solid #dde4ea;font-size:13px;font-weight:700;color:#4a6070;cursor:pointer;background:#f4f7fa;font-family:'Nunito',sans-serif}
+.day-chip.on{background:var(--bleu);color:#fff;border-color:var(--bleu)}
 footer{background:var(--bleu);color:var(--mousse);text-align:center;padding:14px;font-size:11px;line-height:1.8}
 footer a{color:var(--soleil);text-decoration:none}
 </style>
@@ -105,6 +109,7 @@ footer a{color:var(--soleil);text-decoration:none}
 </div>
 <div class="lieux" id="lieux"></div>
 <div class="profiles" id="profiles"></div>
+<div class="day-selector" id="day-selector"></div>
 <div id="install-tip" style="background:#E1F5EE;border-bottom:1px solid #b2dfcc;padding:10px 14px;display:flex;align-items:flex-start;gap:10px">
   <span style="font-size:18px;flex-shrink:0">📲</span>
   <div style="flex:1;font-size:12px;color:#0A3D5C;line-height:1.6;font-weight:600">
@@ -259,7 +264,7 @@ const ACTS={
 };
 const BPS={bassin:[{icon:"🛶",titre:"Location paddle à Andernos",txt:"Prêt-à-pagayer",cta:"Découvrir →",url:"#"},{icon:"🦪",titre:"Huîtres du bassin",txt:"Producteurs locaux",cta:"Trouver →",url:"#"},{icon:"⛵",titre:"École de voile — Arès",txt:"Tous niveaux",cta:"S'inscrire →",url:"#"}],ocean:[{icon:"🏄",titre:"École de surf — Lacanau",txt:"Débutants & perfectionnement",cta:"Réserver →",url:"#"},{icon:"🚲",titre:"Location vélo côtier",txt:"Lacanau → Le Porge",cta:"Louer →",url:"#"}]};
 
-let mode='bassin',lieu=LIEUX.bassin[0],profil=PROFILS.bassin[0],bpIdx=0;
+let mode='bassin',lieu=LIEUX.bassin[0],profil=PROFILS.bassin[0],bpIdx=0,selectedDay=0;
 
 // ── UTILS ─────────────────────────────────────────────────
 function pad(n){return String(n).padStart(2,'0')}
@@ -269,9 +274,9 @@ function dateKey(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.ge
 function parseH(str,base,off=0){if(!str)return null;const[h,m]=str.split(':').map(Number);const d=new Date(base);d.setHours(h,m+off,0,0);return d;}
 
 // ── INTERPOLATION SHOM ────────────────────────────────────
-function buildSerie(data,off){
+function buildSerie(data,off,refDate){
   if(!data)return null;
-  const today=new Date();today.setHours(0,0,0,0);
+  const today=refDate?new Date(refDate):new Date();today.setHours(0,0,0,0);
   const tom=new Date(today);tom.setDate(tom.getDate()+1);
   const dataTom=SHOM[dateKey(tom)];
   const pts=[];
@@ -319,8 +324,8 @@ function getSeuil(serie,pid){
 // Fenêtres basées sur les pics SHOM (plus fiable que seuil %)
 // baignade : 2h avant → 2h après chaque marée haute
 // bateau   : 1h30 avant → 2h30 après chaque marée haute
-function getFenetres(pts, pid){
-  const now=new Date();
+function getFenetres(pts, pid, refDate){
+  const now=refDate||new Date();
   const avantMin=pid==='bateau'?90:120;
   const apresMin=pid==='bateau'?150:120;
   const hautes=pts.filter(p=>p.haute&&p.t.toDateString()===now.toDateString());
@@ -396,6 +401,12 @@ function verdictOcean(pts,now){
 
 // ── RENDER ────────────────────────────────────────────────
 function render(){
+  renderDaySelector();
+  if(selectedDay===0)renderToday();
+  else renderFutureDay(selectedDay);
+}
+
+function renderToday(){
   const now=new Date();
   const key=dateKey(now);
   const data=SHOM[key];
@@ -544,6 +555,120 @@ ${bpHTML}
 </div>
 <div class="shom-badge"><span>📊 Données SHOM officielles 2026</span></div>
 <button class="rfbtn" onclick="refresh()">↻ Actualiser</button>`;
+}
+
+// ── JOURS À L'AVANCE ───────────────────────────────────────
+function renderDaySelector(){
+  const wrap=document.getElementById('day-selector');
+  if(!wrap)return;
+  wrap.innerHTML=[0,1,2,3].map(off=>{
+    const d=new Date();d.setDate(d.getDate()+off);
+    let lbl;
+    if(off===0){lbl="Aujourd'hui";}
+    else{const wd=d.toLocaleDateString('fr-FR',{weekday:'short'});lbl=wd.charAt(0).toUpperCase()+wd.slice(1)+' '+d.getDate();}
+    return `<span class="day-chip${off===selectedDay?' on':''}" onclick="selDay(${off})">${lbl}</span>`;
+  }).join('');
+}
+function selDay(off){selectedDay=off;render();}
+
+function renderFutureDay(offset){
+  const day=new Date();day.setHours(0,0,0,0);day.setDate(day.getDate()+offset);
+  const key=dateKey(day);
+  const data=SHOM[key];
+  const off=mode==='bassin'?(OFFSETS[lieu]||0):0;
+  const res=data?buildSerie(data,off,day):null;
+  const isOcean=mode==='ocean';
+  const dateLabel=day.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const badgeHTML=`<div style="text-align:center;margin-bottom:8px">
+  <span style="display:inline-block;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;background:${isOcean?'var(--surf-light)':'#E1F5EE'};color:${isOcean?'var(--surf)':'var(--bleu)'}">
+    ${isOcean?'🌊 Océan':'🏖️ Bassin'} · ${lieu}
+  </span>
+</div>
+<div style="text-align:center;font-size:14px;font-weight:800;color:var(--bleu);margin-bottom:10px;text-transform:capitalize">📅 ${dateLabel}</div>`;
+
+  if(!res){
+    document.getElementById('main').innerHTML=badgeHTML+`<div style="background:#FAEEDA;border-radius:14px;padding:20px;text-align:center"><div style="font-size:36px;margin-bottom:8px">📅</div><div style="font-weight:700;color:var(--bleu)">Données non disponibles pour cette date</div></div>`;
+    return;
+  }
+
+  const{serie,pts}=res;
+  const pid=profil.id;
+  const seuil=!isOcean?getSeuil(serie,pid):null;
+  const fenetres=!isOcean?getFenetres(pts,pid,day):[];
+
+  // Plage(s) utile(s) du jour sélectionné
+  let plageHTML='';
+  if(!isOcean){
+    if(fenetres.length>0){
+      const slots=fenetres.map(f=>{
+        const h=f.debut.getHours();
+        const label=h<12?'🌅 Matin':h<17?'☀️ Après-midi':h<21?'🌇 Soir':'🌙 Nuit';
+        return `
+        <div style="background:#f4f7fa;border:1.5px solid #dde4ea;border-radius:14px;padding:12px 10px;text-align:center">
+          <div style="font-size:12px;font-weight:700;color:#7a8e9a;margin-bottom:8px">${label}</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:6px">
+            <span style="font-size:22px;font-weight:900;color:var(--bleu);font-family:'Nunito',sans-serif">${fmtH(f.debut)}</span>
+            <span style="color:var(--teal);font-size:14px;font-weight:700">→</span>
+            <span style="font-size:22px;font-weight:900;color:var(--bleu);font-family:'Nunito',sans-serif">${fmtH(f.fin)}</span>
+          </div>
+          <div style="font-size:11px;color:#8a9eaa">⏱ ${fmtCD((f.fin-f.debut)/60000)}${f.coeff?' · coeff '+f.coeff:''}</div>
+        </div>`;
+      }).join('');
+      plageHTML=`<div class="plage-utile">
+        <div class="plage-utile-title">🏖️ Plage${fenetres.length>1?'s utiles':' utile'} ce jour-là</div>
+        <div style="display:grid;grid-template-columns:repeat(${Math.min(fenetres.length,2)},1fr);gap:8px">${slots}</div>
+      </div>`;
+    } else {
+      plageHTML=`<div class="plage-utile">
+        <div class="plage-utile-title">🏖️ Plage utile ce jour-là</div>
+        <div style="text-align:center;font-size:13px;color:#c0392b;font-weight:700;padding:8px 0">Coefficient trop faible — eau insuffisante ce jour-là</div>
+      </div>`;
+    }
+  }
+
+  // Courbe (sans curseur "maintenant", puisque ce n'est pas le jour présent)
+  const W=300,H=70;
+  const mn=Math.min(...serie.map(p=>p.h)),mx=Math.max(...serie.map(p=>p.h)),rng=mx-mn||1;
+  const toX=i=>i/(serie.length-1)*W;
+  const toY=h=>H-4-((h-mn)/rng)*(H-14)+2;
+  const poly=serie.map((p,i)=>`${toX(i).toFixed(1)},${toY(p.h).toFixed(1)}`).join(' ');
+  const sc=isOcean?'#1A6B9A':'#1D9E75',zc2=isOcean?'#B5D4F4':'#9FE1CB';
+  let zones='';
+  if(!isOcean){
+    fenetres.forEach(f=>{
+      const x1=Math.max(0,(f.debut.getHours()*60+f.debut.getMinutes())/1440*W);
+      const x2=Math.min(W,(f.fin.getHours()*60+f.fin.getMinutes())/1440*W);
+      zones+=`<rect x="${x1.toFixed(1)}" y="0" width="${Math.max(0,x2-x1).toFixed(1)}" height="${H}" fill="${zc2}" fill-opacity="0.5" rx="3"/>`;
+    });
+  }
+  if(isOcean&&pid==='surf')pts.filter(p=>!p.haute&&p.t.toDateString()===day.toDateString()).forEach(p=>{const pm=p.t.getHours()*60+p.t.getMinutes();const x1=(pm/1440)*W,x2=Math.min(W,((pm+180)/1440)*W);zones+=`<rect x="${x1.toFixed(1)}" y="0" width="${(x2-x1).toFixed(1)}" height="${H}" fill="${zc2}" fill-opacity="0.4" rx="3"/>`;});
+  const seuilY=!isOcean?toY(seuil):null;
+  const seuilLine=seuilY?`<line x1="0" y1="${seuilY.toFixed(1)}" x2="${W}" y2="${seuilY.toFixed(1)}" stroke="#EF9F27" stroke-width="1" stroke-dasharray="4,3" opacity="0.7"/>`:'';
+
+  // Liste de toutes les marées de ce jour-là
+  const dayPts=pts.filter(p=>p.t.toDateString()===day.toDateString()).sort((a,b)=>a.t-b.t);
+  const tideList=dayPts.map(p=>`
+    <div class="tb" style="min-width:78px">
+      <div class="tb-l">${p.haute?'Marée haute':'Marée basse'}</div>
+      <div class="tb-v">${fmtH(p.t)}</div>
+      <div class="tb-s">${p.haute?'Coeff. '+p.coeff:p.h.toFixed(2)+' m'}</div>
+    </div>`).join('');
+
+  document.getElementById('main').innerHTML=badgeHTML+`
+${plageHTML}
+<div class="courbe-card">
+  <div style="font-size:11px;color:#6a8090;margin-bottom:10px">Prévision${!isOcean?' · <span style="color:#EF9F27">- - -</span> seuil eau utile':''}</div>
+  <div style="position:relative;height:70px;width:100%">
+    <svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="none">
+      ${zones}<polyline points="${poly}" fill="none" stroke="${sc}" stroke-width="2"/>
+      ${seuilLine}
+    </svg>
+  </div>
+  <div class="time-axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span></div>
+  <div class="tide-boxes" style="flex-wrap:wrap">${tideList}</div>
+</div>
+<div class="shom-badge"><span>📊 Données SHOM officielles 2026</span></div>
+<button class="rfbtn" onclick="selDay(0)">↩ Revenir à aujourd'hui</button>`;
 }
 
 function renderLieux(){document.getElementById('lieux').innerHTML=LIEUX[mode].map(l=>`<span class="cb${l===lieu?' on-'+mode:''}" onclick="selLieu('${l}')">${l}</span>`).join('');}
