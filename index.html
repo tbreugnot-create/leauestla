@@ -122,10 +122,12 @@ footer a{color:var(--soleil);text-decoration:none}
   </div>
   <button onclick="document.getElementById('install-tip').style.display='none'" style="background:none;border:none;font-size:20px;color:#7a8e9a;cursor:pointer;padding:0;flex-shrink:0;line-height:1">×</button>
 </div>
-<main id="main"></main>
+<div id="alerte-donnees" style="display:none;background:#FAEEDA;color:#7a4a00;font-size:12px;font-weight:600;padding:8px 14px;border-bottom:1px solid #f0d9a8"></div>
+<main id="main"><div style="text-align:center;padding:40px 0;color:#8a9eaa;font-size:13px">🌊 Chargement des marées…</div></main>
 <footer>
   <div>🌊 <strong style="color:#fff">leauestla.fr</strong> — Bassin d'Arcachon · Côte Atlantique</div>
-  <div>Données : <strong style="color:var(--soleil)">SHOM 2026</strong> · Gratuit · Sans inscription</div>
+  <div>Données : <strong style="color:var(--soleil)">SHOM <span class="annee-shom">2026</span></strong> · Gratuit · Sans inscription</div>
+  <div id="donnees-jusquau" style="font-size:10px;opacity:.8"></div>
   <div style="margin-top:6px">
     <a href="/partenaires.html" style="color:var(--soleil);text-decoration:none;font-weight:700">🤝 Devenir partenaire</a>
     &nbsp;·&nbsp;
@@ -134,123 +136,58 @@ footer a{color:var(--soleil);text-decoration:none}
 </footer>
 </div>
 <script>
-// ── DONNÉES SHOM 2026 ─────────────────────────────────────
-const SHOM={
-  "2026-06-09":["06:14",1.19,"12:49",3.35,47,"18:45",1.28,"00:14",3.51,47],
-  "2026-06-10":["07:21",1.13,"13:55",3.47,52,"19:53",1.16,"01:17",3.55,49],
-  "2026-06-11":["08:27",1.01,"14:58",3.65,60,"20:58",0.98,"02:23",3.66,55],
-  "2026-06-12":["09:30",0.87,"15:57",3.85,69,"22:01",0.79,"03:26",3.81,64],
-  "2026-06-13":["10:31",0.73,"16:52",4.06,79,"23:02",0.61,"04:25",3.98,74],
-  "2026-06-14":["11:28",0.61,"17:44",4.23,87,"23:59",0.44,"05:21",4.12,83],
-  "2026-06-15":["12:21",0.53,"18:36",4.36,93,null,null,"06:14",4.22,90],
-  "2026-06-16":["13:12",0.50,"19:27",4.42,95,"00:52",0.33,"07:06",4.26,94],
-  "2026-06-17":["13:59",0.52,"20:18",4.39,93,"01:43",0.29,"07:57",4.22,94],
-  "2026-06-18":["14:46",0.59,"21:09",4.29,87,"02:31",0.33,"08:47",4.10,90],
-  "2026-06-19":["15:31",0.69,"22:01",4.11,79,"03:17",0.44,"09:38",3.93,83],
-  "2026-06-20":["16:17",0.83,"22:54",3.91,69,"04:03",0.60,"10:30",3.73,74],
-  "2026-06-21":["17:07",0.99,"23:48",3.70,59,"04:50",0.80,"11:23",3.55,64],
-  "2026-06-22":["18:01",1.13,null,null,null,"05:41",0.99,"12:19",3.41,55],
-  "2026-06-23":["19:02",1.24,"00:44",3.53,51,"06:37",1.15,"13:16",3.34,48],
-  "2026-06-24":["20:07",1.27,"01:42",3.42,47,"07:38",1.24,"14:16",3.35,46],
-  "2026-06-25":["21:11",1.22,"02:43",3.38,46,"08:42",1.25,"15:15",3.43,47],
-  "2026-06-26":["22:08",1.13,"03:42",3.41,49,"09:40",1.19,"16:08",3.54,51],
-  "2026-06-27":["22:56",1.03,"04:34",3.48,54,"10:31",1.10,"16:54",3.67,56],
-  "2026-06-28":["23:39",0.95,"05:19",3.57,59,"11:15",1.03,"17:35",3.79,61],
-  "2026-06-29":[null,null,"05:59",3.66,63,"11:54",0.97,"18:14",3.89,65],
-  "2026-06-30":["00:18",0.87,"06:37",3.72,67,"12:32",0.91,"18:51",3.95,69],
-  "2026-07-01":["00:56",0.80,"07:13",3.75,70,"13:09",0.62,"19:18",4.04,83],
-  "2026-07-02":["01:34",0.74,"07:47",3.76,71,"13:51",0.62,"20:00",4.00,81],
-  "2026-07-03":["02:11",0.73,"08:21",3.76,72,"14:33",0.69,"20:45",3.91,78],
-  "2026-07-04":["02:47",0.75,"08:55",3.73,70,"15:17",0.79,"21:34",3.79,72],
-  "2026-07-05":["03:22",0.80,"09:34",3.68,68,"16:05",0.93,"22:28",3.65,64],
-  "2026-07-06":["03:59",0.87,"10:17",3.60,64,"17:01",1.07,"23:33",3.56,58],
-  "2026-07-07":["04:40",0.95,"11:04",3.52,59,"18:08",1.17,null,null,null],
-  "2026-07-08":["05:30",1.05,"12:01",3.45,54,"19:19",1.18,"00:46",3.56,54],
-  "2026-07-09":["06:33",1.13,"13:06",3.45,52,"20:29",1.11,"01:56",3.65,55],
-  "2026-07-10":["07:46",1.13,"14:19",3.54,53,"21:33",0.99,"02:59",3.82,61],
-  "2026-07-11":["08:59",1.04,"15:31",3.71,60,"22:30",0.86,"03:57",4.01,69],
-  "2026-07-12":["10:07",0.91,"16:35",3.94,70,"23:20",0.77,"04:48",4.18,77],
-  "2026-07-13":["11:12",0.75,"17:33",4.18,81,null,null,"05:36",4.30,83],
-  "2026-07-14":["12:11",0.60,"18:27",4.37,90,"00:05",0.71,"06:20",4.35,86],
-  "2026-07-15":["13:04",0.48,"19:18",4.48,96,"00:44",0.70,"07:00",4.32,86],
-  "2026-07-16":["13:52",0.43,"20:06",4.49,98,"01:20",0.74,"07:36",4.22,83],
-  "2026-07-17":["14:35",0.45,"20:52",4.40,94,"01:53",0.81,"08:09",4.08,76],
-  "2026-07-18":["15:14",0.54,"21:35",4.22,86,"02:25",0.92,"08:41",3.91,68],
-  "2026-07-19":["15:52",0.69,"22:16",3.97,75,"02:57",1.08,"09:15",3.72,59],
-  "2026-07-20":["16:32",0.89,"22:58",3.71,63,"03:31",1.26,"09:56",3.51,48],
-  "2026-07-21":["17:15",1.12,"23:47",3.45,50,"04:11",1.45,"10:48",3.30,39],
-  "2026-07-22":["18:08",1.35,null,null,null,"05:07",1.62,"11:57",3.16,32],
-  "2026-07-23":["19:17",1.49,"00:46",3.25,40,"06:36",1.68,"13:12",3.13,31],
-  "2026-07-24":["20:35",1.47,"01:53",3.13,35,"07:53",1.55,"14:29",3.25,37],
-  "2026-07-25":["21:43",1.33,"03:09",3.15,37,"08:55",1.34,"15:31",3.45,48],
-  "2026-07-26":["22:36",1.15,"04:16",3.27,44,"09:51",1.09,"16:20",3.69,61],
-  "2026-07-27":["23:22",0.99,"05:04",3.44,53,"10:42",0.85,"17:04",3.91,73],
-  "2026-07-28":[null,null,"05:44",3.60,61,"11:31",0.63,"17:46",4.09,84],
-  "2026-07-29":["00:03",0.84,"06:21",3.74,69,"12:16",0.46,"18:26",4.22,93],
-  "2026-07-30":["00:42",0.72,"06:55",3.85,75,"12:59",0.36,"19:05",4.28,98],
-  "2026-07-31":["01:19",0.63,"07:29",3.93,80,"13:59",0.36,"19:45",4.28,98],
-  "2026-08-01":["01:56",0.58,"08:01",3.97,83,"14:08",0.66,"20:16",4.19,83],
-  "2026-08-02":["02:30",0.59,"08:33",3.98,83,"14:40",0.69,"20:51",4.16,82],
-  "2026-08-03":["03:02",0.64,"09:08",3.93,80,"15:12",0.74,"21:28",4.06,77],
-  "2026-08-04":["03:34",0.73,"09:46",3.83,74,"15:47",0.83,"22:09",3.91,70],
-  "2026-08-05":["04:10",0.84,"10:28",3.69,66,"16:29",0.96,"22:56",3.72,61],
-  "2026-08-06":["04:55",1.01,"11:20",3.53,57,"17:22",1.13,"23:56",3.52,52],
-  "2026-08-07":["05:53",1.21,"12:29",3.42,48,"18:37",1.27,null,null,null],
-  "2026-08-08":["07:15",1.32,"13:54",3.44,46,"20:06",1.22,"01:13",3.40,46],
-  "2026-08-09":["08:40",1.25,"15:20",3.63,53,"21:27",1.02,"02:42",3.44,48],
-  "2026-08-10":["09:57",1.05,"16:29",3.92,66,"22:40",0.75,"04:01",3.63,59],
-  "2026-08-11":["11:06",0.80,"17:27",4.21,81,"23:43",0.48,"05:04",3.89,74],
-  "2026-08-12":["12:03",0.56,"18:17",4.44,93,null,null,"05:57",4.11,87],
-  "2026-08-13":["12:53",0.40,"19:03",4.56,100,"00:36",0.28,"06:44",4.26,97],
-  "2026-08-14":["13:37",0.34,"19:46",4.56,102,"01:23",0.20,"07:28",4.31,102],
-  "2026-08-15":["14:15",0.38,"20:25",4.45,98,"02:03",0.25,"08:07",4.27,101],
-  "2026-08-16":["14:49",0.51,"21:00",4.26,90,"02:39",0.39,"08:43",4.14,95],
-  "2026-08-17":["15:21",0.68,"21:32",4.00,78,"03:11",0.59,"09:16",3.97,84],
-  "2026-08-18":["15:53",0.91,"22:06",3.71,64,"03:41",0.82,"09:47",3.77,71],
-  "2026-08-19":["16:28",1.18,"22:46",3.41,49,"04:12",1.07,"10:24",3.54,57],
-  "2026-08-20":["17:09",1.46,"23:47",3.12,36,"04:47",1.34,"11:13",3.30,42],
-  "2026-08-21":["18:16",1.70,null,null,null,"05:33",1.61,"12:25",3.12,30],
-  "2026-08-22":["20:09",1.69,"01:07",2.95,27,"07:03",1.78,"13:49",3.08,26],
-  "2026-08-23":["21:22",1.47,"02:40",2.97,28,"08:43",1.67,"15:15",3.23,32],
-  "2026-08-24":["22:14",1.22,"03:56",3.17,38,"09:45",1.44,"16:13",3.48,44],
-  "2026-08-25":["22:59",0.98,"04:43",3.41,51,"10:33",1.19,"16:56",3.74,57],
-  "2026-08-26":["23:40",0.79,"05:21",3.65,63,"11:16",0.98,"17:34",3.97,68],
-  "2026-08-27":[null,null,"05:56",3.85,74,"11:56",0.80,"18:10",4.16,78],
-  "2026-08-28":["00:20",0.64,"06:30",4.02,83,"12:35",0.66,"18:44",4.30,86],
-  "2026-08-29":["00:58",0.54,"07:03",4.13,89,"13:12",0.57,"19:18",4.38,91],
-  "2026-08-30":["01:34",0.49,"07:35",4.20,93,"13:47",0.54,"19:50",4.40,93],
-  "2026-08-31":["02:07",0.51,"08:06",4.20,93,"14:19",0.57,"20:24",4.35,91],
-  "2026-09-01":["02:38",0.58,"08:41",4.15,89,"14:51",0.64,"21:01",4.22,85],
-  "2026-09-02":["03:10",0.69,"09:18",4.02,81,"15:26",0.76,"21:42",4.00,75],
-  "2026-09-03":["03:46",0.85,"10:01",3.82,69,"16:07",0.94,"22:30",3.71,62],
-  "2026-09-04":["04:30",1.09,"10:53",3.60,55,"17:01",1.19,"23:34",3.43,48],
-  "2026-09-05":["05:29",1.35,"12:07",3.41,43,"18:21",1.38,null,null,null],
-  "2026-09-06":["07:00",1.50,"13:50",3.43,41,"20:03",1.31,"01:05",3.28,40],
-  "2026-09-07":["08:36",1.36,"15:19",3.68,52,"21:27",1.03,"02:45",3.38,45],
-  "2026-09-08":["09:53",1.07,"16:24",4.01,68,"22:34",0.70,"03:59",3.66,60],
-  "2026-09-09":["10:55",0.76,"17:15",4.29,83,"23:29",0.44,"04:55",3.95,76],
-  "2026-09-10":["11:48",0.51,"18:00",4.48,95,null,null,"05:42",4.17,90],
-  "2026-09-11":["12:33",0.38,"18:41",4.56,101,"00:17",0.29,"06:23",4.30,98],
-  "2026-09-12":["13:13",0.37,"19:18",4.54,101,"00:59",0.28,"07:02",4.35,102],
-  "2026-09-13":["13:48",0.45,"19:52",4.43,97,"01:36",0.37,"07:36",4.32,100],
-  "2026-09-14":["14:18",0.58,"20:23",4.24,89,"02:07",0.53,"08:08",4.22,93],
-  "2026-09-15":["14:46",0.75,"20:53",4.00,77,"02:35",0.71,"08:38",4.08,83],
-  "2026-09-16":["15:14",0.97,"21:23",3.72,63,"03:01",0.91,"09:08",3.89,70],
-  "2026-09-17":["15:44",1.22,"22:00",3.40,49,"03:28",1.14,"09:41",3.65,56],
-  "2026-09-18":["16:19",1.50,"22:49",3.10,35,"03:57",1.40,"10:24",3.38,41],
-  "2026-09-19":["17:10",1.76,null,null,null,"04:34",1.67,"11:28",3.14,28],
-  "2026-09-20":["19:36",1.82,"00:16",2.89,24,"05:39",1.90,"13:01",3.05,22],
-  "2026-09-21":["20:48",1.57,"01:59",2.92,24,"08:09",1.82,"14:31",3.20,29],
-  "2026-09-22":["21:39",1.28,"03:18",3.15,35,"09:09",1.55,"15:35",3.47,42],
-  "2026-09-23":["22:24",1.01,"04:06",3.44,50,"09:58",1.26,"16:21",3.77,57],
-  "2026-09-24":["23:08",0.79,"04:46",3.73,64,"10:43",1.00,"17:01",4.04,71],
-  "2026-09-25":["23:50",0.62,"05:23",3.97,77,"11:26",0.79,"17:39",4.26,82],
-  "2026-09-26":[null,null,"05:59",4.16,87,"12:07",0.63,"18:15",4.42,92],
-  "2026-09-27":["00:30",0.52,"06:33",4.29,95,"12:46",0.53,"18:50",4.50,97],
-  "2026-09-28":["01:07",0.48,"07:07",4.37,99,"13:23",0.49,"19:24",4.52,99],
-  "2026-09-29":["01:42",0.50,"07:41",4.38,98,"13:58",0.51,"20:01",4.44,96],
-  "2026-09-30":["02:16",0.58,"08:17",4.31,92,"14:33",0.59,"20:40",4.27,88],
-};
+// ── DONNÉES DE MARÉE (chargées depuis marees.json) ─────────
+// Le fichier marees.json contient, par jour, la liste chronologique des
+// marées : [type ("H" haute / "B" basse), "HH:MM", hauteur m, coef (PM)].
+// Pour prolonger les données : voir outils/README-donnees.md
+let MAREES={};          // dateKey -> liste d'événements
+let MAREES_META=null;   // {debut, fin, maj, source, port}
+const MAREES_URL='marees.json';
+const ALERTE_FIN_JOURS=21; // alerte si la table se termine dans moins de 3 semaines
+
+async function chargerMarees(){
+  let json=null;
+  try{
+    const r=await fetch(MAREES_URL+'?v='+new Date().toISOString().slice(0,10),{cache:'no-cache'});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    json=await r.json();
+    if(!json||!json.jours)throw new Error('format invalide');
+    try{localStorage.setItem('marees_cache',JSON.stringify(json));}catch(e){}
+  }catch(err){
+    console.warn('marees.json indisponible, tentative via le cache local :',err.message);
+    try{json=JSON.parse(localStorage.getItem('marees_cache')||'null');}catch(e){json=null;}
+  }
+  if(!json){
+    document.getElementById('main').innerHTML=`<div style="background:#FAEEDA;border-radius:14px;padding:20px;text-align:center"><div style="font-size:36px;margin-bottom:8px">📡</div><div style="font-weight:700;color:var(--bleu)">Impossible de charger les horaires de marée</div><div style="font-size:12px;color:#8a9eaa;margin-top:6px">Vérifie ta connexion puis recharge la page.</div></div>`;
+    return false;
+  }
+  MAREES=json.jours;
+  MAREES_META={debut:json.debut,fin:json.fin,maj:json.maj,source:json.source,port:json.port};
+  majInfosDonnees();
+  return true;
+}
+
+function anneesShom(){
+  if(!MAREES_META)return new Date().getFullYear();
+  return [MAREES_META.debut.slice(0,4),MAREES_META.fin.slice(0,4)].filter((v,i,a)=>a.indexOf(v)===i).join('–');
+}
+
+function majInfosDonnees(){
+  if(!MAREES_META)return;
+  const fin=new Date(MAREES_META.fin+'T00:00:00');
+  const finTxt=fin.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  document.querySelectorAll('.annee-shom').forEach(el=>el.textContent=anneesShom());
+  const f=document.getElementById('donnees-jusquau');
+  if(f)f.textContent=`Prévisions jusqu'au ${finTxt}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const joursRestants=Math.round((fin-today)/86400000);
+  const al=document.getElementById('alerte-donnees');
+  if(al){
+    if(joursRestants<0){al.style.display='block';al.innerHTML=`⚠️ Les horaires de marée ne sont plus à jour (dernière date : ${finTxt}). Mise à jour en cours.`;}
+    else if(joursRestants<=ALERTE_FIN_JOURS){al.style.display='block';al.innerHTML=`ℹ️ Horaires disponibles jusqu'au ${finTxt} — prolongation en préparation.`;}
+    else al.style.display='none';
+  }
+}
 
 // ── CONFIG ────────────────────────────────────────────────
 const OFFSETS={Andernos:8,Arès:12,Audenge:-2,Lanton:0,Biganos:-5,Mios:-8,"Le Teich":-4};
@@ -274,29 +211,28 @@ function dateKey(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.ge
 function parseH(str,base,off=0){if(!str)return null;const[h,m]=str.split(':').map(Number);const d=new Date(base);d.setHours(h,m+off,0,0);return d;}
 
 // ── INTERPOLATION SHOM ────────────────────────────────────
+// Points de marée (veille + jour + lendemain) pour une courbe continue
+// sur toute la journée, décalés de `off` minutes (port rattaché).
+function ptsMarees(day,off){
+  const pts=[];
+  [-1,0,1].forEach(delta=>{
+    const d=new Date(day);d.setDate(d.getDate()+delta);
+    const evs=MAREES[dateKey(d)];
+    if(!evs)return;
+    evs.forEach(e=>{
+      const t=parseH(e[1],d,off);
+      if(!t||e[2]==null)return;
+      pts.push({t,h:e[2],haute:e[0]==='H',coeff:e[3]});
+    });
+  });
+  pts.sort((a,b)=>a.t-b.t);
+  return pts;
+}
+
 function buildSerie(data,off,refDate){
   if(!data)return null;
   const today=refDate?new Date(refDate):new Date();today.setHours(0,0,0,0);
-  const tom=new Date(today);tom.setDate(tom.getDate()+1);
-  const dataTom=SHOM[dateKey(tom)];
-  const pts=[];
-  function add(d,base){
-    if(!d)return;
-    const[hBM,vBM,hHM,vHM,cHM,hBS,vBS,hHS,vHS,cHS]=d;
-    const bm=parseH(hBM,base,off),hm=parseH(hHM,base,off);
-    const bs=parseH(hBS,base,off);
-    let hs=parseH(hHS,base,off);
-    if(bm&&vBM!=null)pts.push({t:bm,h:vBM,haute:false});
-    if(hm&&vHM!=null)pts.push({t:hm,h:vHM,haute:true,coeff:cHM});
-    if(bs&&vBS!=null)pts.push({t:bs,h:vBS,haute:false});
-    if(hs&&vHS!=null){
-      if(hs.getHours()<6&&base.getTime()===today.getTime())hs.setDate(hs.getDate()+1);
-      pts.push({t:hs,h:vHS,haute:true,coeff:cHS});
-    }
-  }
-  add(data,today);
-  if(dataTom)add(dataTom,tom);
-  pts.sort((a,b)=>a.t-b.t);
+  const pts=ptsMarees(today,off);
   if(pts.length<2)return null;
   const serie=[];
   const end=new Date(today);end.setHours(23,59,0,0);
@@ -305,7 +241,7 @@ function buildSerie(data,off,refDate){
     while(i<pts.length-1&&pts[i+1].t<=t)i++;
     if(i>=pts.length-1){serie.push({time:new Date(t),h:pts[pts.length-1].h});continue;}
     const p0=pts[i],p1=pts[i+1];
-    const prog=(t-p0.t)/(p1.t-p0.t);
+    const prog=Math.max(0,Math.min(1,(t-p0.t)/(p1.t-p0.t)));
     const mu=(1-Math.cos(prog*Math.PI))/2;
     serie.push({time:new Date(t),h:Math.max(0,p0.h*(1-mu)+p1.h*mu)});
   }
@@ -409,7 +345,7 @@ function render(){
 function renderToday(){
   const now=new Date();
   const key=dateKey(now);
-  const data=SHOM[key];
+  const data=MAREES[key];
   const off=mode==='bassin'?(OFFSETS[lieu]||0):0;
   const res=data?buildSerie(data,off):null;
   if(!res){
@@ -553,7 +489,7 @@ ${bpHTML}
   ${nextHpt?`<div class="nb"><div class="nb-l">Prochaine haute</div><div class="nb-v">${fmtH(nextHpt.t)}</div><div class="nb-s">coeff. ${nextHpt.coeff}</div></div>`:''}
   ${nextBpt?`<div class="nb"><div class="nb-l">Prochaine basse</div><div class="nb-v">${fmtH(nextBpt.t)}</div></div>`:''}
 </div>
-<div class="shom-badge"><span>📊 Données SHOM officielles 2026</span></div>
+<div class="shom-badge"><span>📊 Données SHOM officielles ${anneesShom()}</span></div>
 <button class="rfbtn" onclick="refresh()">↻ Actualiser</button>`;
 }
 
@@ -574,7 +510,7 @@ function selDay(off){selectedDay=off;render();}
 function renderFutureDay(offset){
   const day=new Date();day.setHours(0,0,0,0);day.setDate(day.getDate()+offset);
   const key=dateKey(day);
-  const data=SHOM[key];
+  const data=MAREES[key];
   const off=mode==='bassin'?(OFFSETS[lieu]||0):0;
   const res=data?buildSerie(data,off,day):null;
   const isOcean=mode==='ocean';
@@ -667,7 +603,7 @@ ${plageHTML}
   <div class="time-axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span></div>
   <div class="tide-boxes" style="flex-wrap:wrap">${tideList}</div>
 </div>
-<div class="shom-badge"><span>📊 Données SHOM officielles 2026</span></div>
+<div class="shom-badge"><span>📊 Données SHOM officielles ${anneesShom()}</span></div>
 <button class="rfbtn" onclick="selDay(0)">↩ Revenir à aujourd'hui</button>`;
 }
 
@@ -678,8 +614,11 @@ function selLieu(l){lieu=l;renderLieux();render();}
 function selProfil(id){profil=PROFILS[mode].find(p=>p.id===id);renderProfils();render();}
 function refresh(){bpIdx++;render();}
 
-renderLieux();renderProfils();render();
-setInterval(()=>render(),60000);
+renderLieux();renderProfils();
+chargerMarees().then(ok=>{if(ok)render();});
+setInterval(()=>{if(MAREES_META)render();},60000);
+// Recharge les données une fois par jour (onglet laissé ouvert / app installée)
+setInterval(()=>{chargerMarees().then(ok=>{if(ok)render();});},6*3600*1000);
 
 function tick(){const n=new Date();const el=document.getElementById('horloge');if(el)el.textContent=`${n.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;}
 tick();setInterval(tick,1000);
